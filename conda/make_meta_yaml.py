@@ -1,7 +1,7 @@
 import os
 
 def get_version_number():
-  path_to_written_version = '../BulkLatticeFinder/__init__.py'
+  path_to_written_version = '../LatticeFinder/__init__.py'
   with open(path_to_written_version) as initPY:
     for line in initPY:
       if line.startswith('__version__'):
@@ -22,12 +22,12 @@ def write_meta_YAML(version):
     metaYAML.write('{% set version = "'+str(version)+'" %}\n')
     metaYAML.write('\n')
     metaYAML.write('package:\n')
-    metaYAML.write('  name: organisms\n')
+    metaYAML.write('  name: latticefinder\n')
     metaYAML.write('  version: {{ version }}\n')
     metaYAML.write('\n')
     metaYAML.write('source:\n')
     metaYAML.write('  git_rev: {{ version }}\n')
-    metaYAML.write('  git_url: https://github.com/GardenGroupUO/BulkLatticeFinder.git\n')
+    metaYAML.write('  git_url: https://github.com/GardenGroupUO/LatticeFinder.git\n')
     metaYAML.write('\n')
     metaYAML.write('build:\n')
     metaYAML.write('  number: 1\n')
@@ -46,9 +46,9 @@ def write_meta_YAML(version):
     metaYAML.write('    - ase\n')
     metaYAML.write('\n')
     metaYAML.write('about:\n')
-    metaYAML.write('  home: https://github.com/GardenGroupUO/BulkLatticeFinder\n')
+    metaYAML.write('  home: https://github.com/GardenGroupUO/LatticeFinder\n')
     metaYAML.write('  license: AGPL-3.0\n')
-    metaYAML.write('  summary: "The BulkLatticeFinder Program is designed to allow one to obtain the preferable lattice constant for some bulk system."\n')
+    metaYAML.write('  summary: "The LatticeFinder Program is designed to allow one to obtain the preferable lattice constant for some bulk system."\n')
     metaYAML.write('\n')
     metaYAML.write('# Build using: conda build .\n')
 

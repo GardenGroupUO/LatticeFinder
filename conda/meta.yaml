@@ -1,12 +1,12 @@
-{% set version = "1.0.1" %}
+{% set version = "1.0.4" %}
 
 package:
-  name: organisms
+  name: latticefinder
   version: {{ version }}
 
 source:
   git_rev: {{ version }}
-  git_url: https://github.com/GardenGroupUO/BulkLatticeFinder.git
+  git_url: https://github.com/GardenGroupUO/LatticeFinder.git
 
 build:
   number: 1
@@ -25,8 +25,8 @@ requirements:
     - ase
 
 about:
-  home: https://github.com/GardenGroupUO/BulkLatticeFinder
+  home: https://github.com/GardenGroupUO/LatticeFinder
   license: AGPL-3.0
-  summary: "The BulkLatticeFinder Program is designed to allow one to obtain the preferable lattice constant for some bulk system."
+  summary: "The LatticeFinder Program is designed to allow one to obtain the preferable lattice constant for some bulk system."
 
 # Build using: conda build .
