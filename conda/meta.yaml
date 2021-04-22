@@ -1,0 +1,32 @@
+{% set version = "1.0.1" %}
+
+package:
+  name: organisms
+  version: {{ version }}
+
+source:
+  git_rev: {{ version }}
+  git_url: https://github.com/GardenGroupUO/BulkLatticeFinder.git
+
+build:
+  number: 1
+  skip: true  # [win and py27 or win32]
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - pip
+  run:
+    - python
+    - numpy
+    - scipy
+    - ase
+
+about:
+  home: https://github.com/GardenGroupUO/BulkLatticeFinder
+  license: AGPL-3.0
+  summary: "The BulkLatticeFinder Program is designed to allow one to obtain the preferable lattice constant for some bulk system."
+
+# Build using: conda build .
