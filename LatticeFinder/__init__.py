@@ -1,7 +1,7 @@
 # The information about the LatticeFinder program
 
 __name__    = 'The LatticeFinder Program'
-__version__ = '1.0.4'
+__version__ = '1.0.5'
 __author__  = 'Geoffrey Weal and Dr. Anna Garden'
 
 import sys
@@ -88,7 +88,7 @@ __license__ = 'GNU AFFERO GENERAL PUBLIC LICENSE'
 __url__ = 'https://github.com/GardenGroupUO/LatticeFinder'
 __doc__ = 'See https://latticefinder.readthedocs.io/en/latest/ for the documentation on this program'
 
-from LatticeFinder.LatticeFinder import LatticeFinder_Program
+from LatticeFinder.LatticeFinder.LatticeFinder import LatticeFinder_Program
 __all__ = ['LatticeFinder_Program'] 
 
 # ------------------------------------------------------------------------------------------------------------------------

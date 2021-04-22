@@ -18,7 +18,7 @@ class lattice_constant_generator:
 			else:
 				generators.append((lattice_constant_type, lattice_constant_parameter))
 		generators.sort()
-		self.lattice_constant_types = [lattice_constant_type for lattice_constant_type, generator in generators]
+		self.lattice_constant_types = sorted([lattice_constant_type for lattice_constant_type, generator in generators])
 		generators = [generator for lattice_constant_type, generator in generators]
 		self.lattice_constant_generator = itertools.product(*generators)
 

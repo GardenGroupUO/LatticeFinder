@@ -4,7 +4,7 @@ from shutil import copyfile
 from ase.io import write
 import multiprocessing as mp
 
-from LatticeFinder.lattice_constant_generator import lattice_constant_generator
+from LatticeFinder.LatticeFinder.lattice_constant_generator import lattice_constant_generator
 
 from ase.lattice.cubic import SimpleCubic, FaceCenteredCubic, BodyCenteredCubic, Diamond
 from ase.lattice.tetragonal import SimpleTetragonal, CenteredTetragonal
@@ -14,42 +14,58 @@ from ase.lattice.triclinic import Triclinic
 from ase.lattice.hexagonal import Hexagonal, HexagonalClosedPacked, Graphite
 from ase.lattice.compounds import B1, B2, B3, L1_2, L1_0
 
+from examining_lattice_constant_methods import get_energies_across_lattice_constants_VASP, get_energies_across_lattice_constants_ASE
+
 from plotting_methods import plot_energy_vs_lattice_constants_1D, plot_energy_vs_lattice_constants_1D
+
+def get_value(value_name, the_dictionary, name_of_dictionary, is_default, default=None):
+	if value_name in the_dictionary.keys():
+		return the_dictionary[value_name]
+	else:
+		if is_default:
+			return default
+		else:
+			print('==================================================')
+			print('Error in the '+str(name_of_dictionary)+' dictionary')
+			print(str(value_name)+' is not in the '+str(name_of_dictionary)+' dictionary')
+			print(str(value_name)+' is required. Put in a value for this.')
+			print('See the manual at latticefinder.readthedocs.io for more information')
+			print('This program will finish without continuing.')
+			print('==================================================')
 
 class LatticeFinder_Program:
 	"""
-
+	This program is designed to give plots and data to help obtain the optimal lattice constants for a 2D and 3D system.
 	"""
-	def __init__(self, symbol, lattice_type, lattice_constant_parameters, calculator, size=(1,1,1), directions=None, miller=None, limits=None, no_of_cpus=1):
-		# General options
-		self.symbol = symbol
-		self.get_lattice_type(lattice_type)
-		self.lattice_constant_parameters = lattice_constant_parameters
-		self.calculator = calculator
-		self.size = size
-		# Other options about constructing the cell
-		self.directions = directions
-		self.miller = miller
-		# Plotting inuts
-		self.limits = limits
+	def __init__(self, input_information, output_information, no_of_cpus=1)
+		# input options required for obtaining lattice constants
+		self.input_information = input_information
+		self.check_input_information()
+		# Information about how to make plots
+		self.output_information = output_information
+		self.check_output_information()
 		# Other options
 		self.no_of_cpus = no_of_cpus
 		# Run the program
 		self.run()
 
-	def get_lattice_type(self,lattice_type):
-		"""
+	def check_input_information(self):
+		# General options
+		self.symbol = get_value('symbol',self.input_information,'input_information',False)
+		self.lattice_type = get_value('lattice_type',self.input_information,'input_information',False)
+		self.lattice_type = eval(self.lattice_type)
+		self.lattice_constant_parameters = get_value('lattice_constant_parameters',self.input_information,'input_information',False)
+		self.calculator = get_value('calculator',self.input_information,'input_information',False) # This could be a string called 'VASP'
+		if self.calculator == 'VASP':
+			self.VASP_Input_files = 'VASP_Files'
+		self.size = get_value('size',self.input_information,'input_information',True,default=(1,1,1))
+		# Other options about constructing the cell
+		self.directions = get_value('directions',self.input_information,'input_information',True,default=None)
+		self.miller = get_value('miller',self.input_information,'input_information',True,default=None)
 
-		"""
-		self.lattice_type_name = lattice_type
-		if isinstance(lattice_type,dict):
-			if lattice_type['type'] == 'VASP':
-				self.lattice_type = lattice_type['type']
-				self.directory_with_vasp_files = lattice_type['Directory with VASP Files']
-			else:
-				exit('Error VASP')
-		else:
-			self.lattice_type = eval(lattice_type)
+	def check_output_information(self):
+		# Plotting variables
+		self.limits = get_value('limits',self.output_information,'output_information',True,default=None)
 
 	############################################################################################################################
 
@@ -57,21 +73,26 @@ class LatticeFinder_Program:
 		"""
 
 		"""
-		self.checks(self.lattice_constant_parameters)
+		# Perform checks on the lattice_constant_parameters to make sure it is in an acceptable format
+		self.lattice_constant_parameters_checks(self.lattice_constant_parameters)
+		# Set up the lattice constant generator and types names for future work
 		self.lattice_constant_generator = lattice_constant_generator(self.lattice_constant_parameters)
 		self.lattice_constant_types = self.lattice_constant_generator.get_lattice_constant_types()
+		# Set up lattice_data.txt for writing the energies of lattice constants into. 
 		self.lattice_data_file = 'lattice_data.txt'
 		energies_vs_lattice_constants = self.setup_energies_vs_lattice_constants()
+		# Process the range of lattice constants and determine the minimum energy and lattice constant, as well as the projected lattice constant
 		self.get_data(energies_vs_lattice_constants)
 		self.minimum_energy, self.lowest_energy_lattice_constants = self.get_minimum_energy(energies_vs_lattice_constants)
+		# Plot the data and give other information about the system
 		self.plot_energy_vs_lattice_constants(energies_vs_lattice_constants)
 		self.get_other_data_about_system(self.minimum_energy, self.lowest_energy_lattice_constants)
 
 	############################################################################################################################
 
-	def checks(self,lattice_constant_parameters):
+	def lattice_constant_parameters_checks(self,lattice_constant_parameters):
 		"""
-
+`		This method is designed to check that lattice_constant_parameters in in the correct format before contining
 		"""
 		if isinstance(lattice_constant_parameters,tuple) or isinstance(lattice_constant_parameters,list):
 			pass
@@ -86,7 +107,7 @@ class LatticeFinder_Program:
 
 	def setup_energies_vs_lattice_constants(self):
 		"""
-
+		This method is designed to load information that has already been gather from previous LatticeFinder runs, or if not setting up the lattice_data_file that lattice constant data will be recorded to.
 		"""
 		if os.path.exists(self.lattice_data_file):
 			energies_vs_lattice_constants = self.load_data()
@@ -97,7 +118,7 @@ class LatticeFinder_Program:
 
 	def load_data(self):
 		"""
-
+		Load data from previous LatticeFinder runs
 		"""
 		energies_vs_lattice_constants = {}
 		leading_data = False
@@ -113,7 +134,7 @@ class LatticeFinder_Program:
 
 	def setup_initial_data_file(self):
 		"""
-
+		Set up the lattice_data_file file that data will be written to.
 		"""
 		with open(self.lattice_data_file,'w') as lattice_data_FILE:
 			lattice_data_FILE.write('Symbol: '+str(self.symbol)+'\n')
@@ -127,7 +148,7 @@ class LatticeFinder_Program:
 			lattice_data_FILE.write('Lattice Constant Results: \n')
 
 	############################################################################################################################
-	from examining_lattice_constant_methods import get_energies_across_lattice_constants_VASP, get_energies_across_lattice_constants_ASE
+	
 	def get_data(self, energies_vs_lattice_constants):
 		"""
 
@@ -136,7 +157,7 @@ class LatticeFinder_Program:
 			get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,self.miller)
 			exit()
 		else:
-			get_energies_across_lattice_constants_ASE (self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,miller,self.calculator,self.no_of_cpus,self.lattice_data_file,self.energies_vs_lattice_constants)
+			get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,miller,self.calculator,self.no_of_cpus,self.lattice_data_file,self.energies_vs_lattice_constants)
 
 	############################################################################################################################
 
