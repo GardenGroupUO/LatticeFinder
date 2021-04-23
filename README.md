@@ -82,7 +82,10 @@ Bulk Modulus: 184.94027058847462 GPa
 
 This program is designed to help obtain the optimal lattice constants for systems that contain more than one lattice constant. For example, for a Au hexagonal close packed (HCP) you will obtain the following plots:
 
-
+<p align="center">
+	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/HCP/Energy_Vs_Lattice_Constant.png">
+	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/HCP/Energy_Vs_Lattice_Constant.png">
+</p>
 
 ## Where can I find the documentation for LatticeFinder
 
