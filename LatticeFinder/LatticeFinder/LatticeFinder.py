@@ -157,9 +157,9 @@ class LatticeFinder_Program:
 			lattice_data_FILE.write('Lattice Constant Results: \n')
 			lattice_data_FILE.write('\n')
 			if len(self.lattice_constant_types) == 1:
-				lattice_data_FILE.write('lattice constant/A: energy/eV (Volume (Ang^3 per atom))\n')
+				lattice_data_FILE.write('Lattice constant/Ang: Energy/eV (Volume (Ang^3 per atom))\n')
 			else:
-				lattice_data_FILE.write('\n')
+				lattice_data_FILE.write('Lattice constant/Ang: Energy/eV\n')
 			lattice_data_FILE.write('----------------------------------------------\n')
 
 	############################################################################################################################

@@ -1,0 +1,23 @@
+Symbol: Au
+Lattice_type: FaceCenteredCubic
+calculator: <asap.RGL object at 0x0x2b81670>
+size: (16, 16, 16)
+directions: []
+miller: []
+Lattice Constant Parameters: ['c']
+
+Properties of System: 
+
+Total energy: -62638.40745189766 eV
+No. of atoms: 16384 Atoms (Note the number of atoms along each natural direction of the bulk is (16, 16, 16))
+Cohesive energy: -3.8231449860777382 eV/Atom
+
+Total Volume: 282300.41600000026 Angstroms^3
+Volume per atom: 17.230250000000016 Angstroms^3/Atom
+
+Stress tensor:
+[[2.49119110e-02 8.53946485e-20 4.31951482e-19]
+ [8.53946485e-20 2.49119110e-02 4.15584716e-19]
+ [4.31951482e-19 4.15584716e-19 2.49119110e-02]]
+
+Bulk Modulus: 231.85785264752434 GPa

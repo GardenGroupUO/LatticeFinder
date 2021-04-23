@@ -35,6 +35,54 @@ It is recommended to read the installation page before using the LatticeFinder p
 
 Note that you can install LatticeFinder through ``pip3`` and ``conda``. 
 
+## Output files that are created by LatticeFinder
+
+The LatticeFinder program is designed to give the information that you can use to determine the optimise value of the lattice constant for your system. For example, for a Au face centred cubic (FCC) lattice you can first perform an broad overlook of the energy per atom for various lattice constants.
+
+<p align="center">
+	<img src="https://github.com/GardenGroupUO/NISP/blob/main/Documentation/source/Results/FCC_Overview/Energy_Vs_Lattice_Constant.png">
+</p>
+
+You can then add more lattice constant measurements around the point where you believe the lowest energy form of the Au FCC lattice resides
+
+<p align="center">
+	<img src="https://github.com/GardenGroupUO/NISP/blob/main/Documentation/source/Results/FCC_Focused/Energy_Vs_Lattice_Constant.png">
+</p>
+
+The data of the energies of all FCC lattices for various lattice constants are also given, as well as other final details about the optimum system, such as the stress tensor and bulk modulus.
+
+```bash
+
+Symbol: Au
+Lattice_type: FaceCenteredCubic
+calculator: <asap.RGL object at 0x0x2fcab40>
+size: (16, 16, 16)
+directions: []
+miller: []
+Lattice Constant Parameters: ['c']
+
+Properties of System: 
+
+Total energy: -62721.105237252974 eV
+No. of atoms: 16384 Atoms (Note the number of atoms along each natural direction of the bulk is (16, 16, 16))
+Cohesive energy: -3.8281924583284286 eV/Atom
+
+Total Volume: 275741.9107614719 Angstroms^3
+Volume per atom: 16.829950607999994 Angstroms^3/Atom
+
+Stress tensor:
+[[-3.97161678e-04  1.47073761e-19  4.09156132e-19]
+ [ 1.47073761e-19 -3.97161678e-04  1.36259282e-19]
+ [ 4.09156132e-19  1.36259282e-19 -3.97161678e-04]]
+
+Bulk Modulus: 184.94027058847462 GPa
+
+```
+
+This program is designed to help obtain the optimal lattice constants for systems that contain more than one lattice constant. For example, for a Au hexagonal close packed (HCP) you will obtain the following plots:
+
+
+
 ## Where can I find the documentation for LatticeFinder
 
 All the information about this program is found online at [latticefinder.readthedocs.io/en/latest/](https://latticefinder.readthedocs.io/en/latest/). Click the button below to also see the documentation: 
