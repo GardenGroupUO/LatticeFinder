@@ -3,6 +3,7 @@ import numpy as np
 from shutil import copyfile
 from ase.io import write
 import multiprocessing as mp
+import matplotlib.pyplot as plt
 
 from LatticeFinder.LatticeFinder.lattice_constant_generator import lattice_constant_generator
 
@@ -125,14 +126,14 @@ class LatticeFinder_Program:
 		energies_vs_lattice_constants = {}
 		leading_data = False
 		with open(self.lattice_data_file,'r') as lattice_data_FILE:
-			for _ in range(9):
+			for _ in range(12):
 				lattice_data_FILE.readline()
 			for line in lattice_data_FILE:
 				lattice_constants, energy_per_atom = line.rstrip('\n').split(':')
 				lattice_constants = eval(lattice_constants)
 				if len(self.lattice_constant_types) == 1:
 					energy_per_atom, volume = energy_per_atom.rstrip('\n').split('(')
-					volume = float(volume.replace('Ang/atom)',''))
+					volume = float(volume.replace(')',''))
 				energy_per_atom = float(energy_per_atom)
 				if len(self.lattice_constant_types) == 1:
 					energies_vs_lattice_constants[lattice_constants] = (energy_per_atom,volume)
@@ -154,6 +155,12 @@ class LatticeFinder_Program:
 			lattice_data_FILE.write('Lattice Constant Parameters: '+str(self.lattice_constant_types)+'\n')
 			lattice_data_FILE.write('\n')
 			lattice_data_FILE.write('Lattice Constant Results: \n')
+			lattice_data_FILE.write('\n')
+			if len(self.lattice_constant_types) == 1:
+				lattice_data_FILE.write('lattice constant/A: energy/eV (Volume (Ang^3 per atom))\n')
+			else:
+				lattice_data_FILE.write('\n')
+			lattice_data_FILE.write('----------------------------------------------\n')
 
 	############################################################################################################################
 	
@@ -240,9 +247,11 @@ class LatticeFinder_Program:
 			bulk_modulus = (BB / kJ) * 1.0e24
 			name_eos = 'Equation_of_State_Plot'
 			# Save figure
-			eos.plot(name_eos+'.png',show=True)
-			eos.plot(name_eos+'.eps')
-			eos.plot(name_eos+'.svg')
+			eos.plot()
+			plt.savefig(name_eos+'.png')
+			plt.savefig(name_eos+'.eps')
+			plt.savefig(name_eos+'.svg')
+			plt.cla(); plt.clf()
 
 		with open('results_file.txt','w') as results_fileTXT:
 			results_fileTXT.write('Symbol: '+str(self.symbol)+'\n')

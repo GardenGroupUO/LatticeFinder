@@ -15,14 +15,20 @@ def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, minimum_e
 		if (lattice_point_c_bottom <= cc_LC <= lattice_point_c_top):
 			lattice_point_c.append(cc_LC)
 			lattice_energies.append(energy_per_atom)
-	plt.scatter(lattice_point_c, lattice_energies, s=5, alpha=0.5)
+	plt.scatter(lattice_point_c, lattice_energies, s=5, alpha=0.5,zorder=10)
+	for cc_point in lowest_energy_lattice_constants:
+		label = 'c = '+str(cc_point) #for aa_point, cc_point in lowest_energy_lattice_constants
+		plt.scatter(lowest_energy_lattice_constants, minimum_energy, color='r', s=5, alpha=0.5,zorder=20, label=label)
 	plt.xlabel('Lattice Constant ('+r'$\AA$'+')')
 	plt.ylabel('Energy per Atom ('+r'$eV/Atom$'+')')
 	percent_diff = 2.0
 	lattice_point_low, lattice_point_high = get_plotting_lims(lattice_point_c,percent_diff)
 	lattice_energies_low, lattice_energies_high = get_plotting_lims(lattice_energies,percent_diff)
+	#x_diff = lattice_energies_high - lattice_energies_low
+	#plt.hlines(minimum_energy,lattice_energies_low - x_diff,lattice_energies_high + x_diff,color='k',linestyles='dashed',zorder=1)
 	plt.xlim((lattice_point_low,lattice_point_high))
 	plt.ylim((lattice_energies_low,lattice_energies_high))
+	leg = plt.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$ev/Atom$')
 	plt.savefig('Energy_Vs_Lattice_Constant.png')
 	plt.savefig('Energy_Vs_Lattice_Constant.svg')
 	plt.savefig('Energy_Vs_Lattice_Constant.eps')

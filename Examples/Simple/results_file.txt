@@ -1,6 +1,6 @@
 Symbol: Au
 Lattice_type: FaceCenteredCubic
-calculator: <asap.RGL object at 0x0x27119f0>
+calculator: <asap.RGL object at 0x0x2b81670>
 size: (16, 16, 16)
 directions: []
 miller: []

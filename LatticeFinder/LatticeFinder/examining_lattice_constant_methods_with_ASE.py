@@ -68,5 +68,5 @@ def save_datum_to_file(lattice_data_file,latticeconstants,energy_per_atom, volum
 		if volume == None:
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+'\n')
 		else:
-			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+' ('+str(volume)+' Ang/atom)\n')
+			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+' ('+str(volume)+')\n')
 			
