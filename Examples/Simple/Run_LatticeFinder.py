@@ -18,6 +18,6 @@ miller=[]
 
 limits = None
 
-no_of_cpus=1
+no_of_cpus = 2
 
 LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, limits=limits, no_of_cpus=no_of_cpus)

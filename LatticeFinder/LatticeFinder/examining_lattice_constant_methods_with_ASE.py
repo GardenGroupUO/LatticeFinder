@@ -8,7 +8,7 @@ def get_energies_across_lattice_constants_ASE(lattice_type,symbol,lattice_consta
 	if no_of_cpus == 1:
 		get_energies_across_lattice_constants_ASE_one_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants)
 	else:
-		get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants)
+		get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,calculator,no_of_cpus,lattice_data_file,energies_vs_lattice_constants)
 	print('================================================================================')
 
 def get_energies_across_lattice_constants_ASE_one_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions=None,miller=None,calculator=None,lattice_data_file=None,energies_vs_lattice_constants={}):
