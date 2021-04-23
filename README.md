@@ -40,13 +40,14 @@ Note that you can install LatticeFinder through ``pip3`` and ``conda``.
 The LatticeFinder program is designed to give the information that you can use to determine the optimise value of the lattice constant for your system. For example, for a Au face centred cubic (FCC) lattice you can first perform an broad overlook of the energy per atom for various lattice constants.
 
 <p align="center">
-	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/FCC_Focused/Energy_Vs_Lattice_Constant.png">
+	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/FCC_Overview/Energy_Vs_Lattice_Constant.png">
 </p>
 
 You can then add more lattice constant measurements around the point where you believe the lowest energy form of the Au FCC lattice resides
 
 <p align="center">
-	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/FCC_Focused/Energy_Vs_Lattice_Constant.png">
+	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/FCC_Focused_1/Energy_Vs_Lattice_Constant.png">
+	<img src="https://github.com/GardenGroupUO/LatticeFinder/blob/main/Documentation/source/Results/FCC_Focused_2/Energy_Vs_Lattice_Constant.png">
 </p>
 
 The data of the energies of all FCC lattices for various lattice constants are also given, as well as other final details about the optimum system, such as the stress tensor and bulk modulus.
