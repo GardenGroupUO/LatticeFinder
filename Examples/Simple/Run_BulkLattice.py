@@ -15,6 +15,9 @@ size=(16,16,16)
 
 directions=[]
 miller=[]
+
+limits = None
+
 no_of_cpus=1
 
-LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus)
+LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, limits=limits, no_of_cpus=no_of_cpus)

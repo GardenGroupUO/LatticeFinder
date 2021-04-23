@@ -36,10 +36,13 @@ class lattice_constant_generator:
 		try:
 			lattice_constants = next(self.lattice_constant_generator)
 			if isinstance(lattice_constants,tuple) or isinstance(lattice_constants,list):
+				#'''
 				if len(lattice_constants) == 1:
 					lattice_constants = round(lattice_constants[0],8)
 				else:
 					lattice_constants = {key: round(value,8) for key, value in zip(self.lattice_constant_types,lattice_constants)}
+				#'''
+				#lattice_constants = {key: round(value,8) for key, value in zip(self.lattice_constant_types,lattice_constants)}
 			return lattice_constants
 		except StopIteration:
 			raise StopIteration()

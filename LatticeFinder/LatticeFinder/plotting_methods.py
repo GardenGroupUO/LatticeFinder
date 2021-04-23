@@ -26,6 +26,7 @@ def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, minimum_e
 	plt.savefig('Energy_Vs_Lattice_Constant.png')
 	plt.savefig('Energy_Vs_Lattice_Constant.svg')
 	plt.savefig('Energy_Vs_Lattice_Constant.eps')
+	plt.cla(); plt.clf()
 
 def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_energy, lowest_energy_lattice_constants):
 	lattice_point_a = []; lattice_point_c = []; lattice_energies = [];
@@ -105,6 +106,7 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	plt.savefig('Energy_Vs_Lattice_Constant.png')
 	plt.savefig('Energy_Vs_Lattice_Constant.svg')
 	plt.savefig('Energy_Vs_Lattice_Constant.eps')
+	plt.cla(); plt.clf()
 	#plt.show()
 
 	#https://jakevdp.github.io/PythonDataScienceHandbook/04.04-density-and-contour-plots.html
@@ -143,3 +145,4 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	plt.savefig('Energy_Vs_Lattice_Constant_Contour.png')
 	plt.savefig('Energy_Vs_Lattice_Constant_Contour.svg')
 	plt.savefig('Energy_Vs_Lattice_Constant_Contour.eps')
+	plt.cla(); plt.clf()

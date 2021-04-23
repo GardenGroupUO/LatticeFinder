@@ -14,64 +14,65 @@ from ase.lattice.triclinic import Triclinic
 from ase.lattice.hexagonal import Hexagonal, HexagonalClosedPacked, Graphite
 from ase.lattice.compounds import B1, B2, B3, L1_2, L1_0
 
-from examining_lattice_constant_methods import get_energies_across_lattice_constants_VASP, get_energies_across_lattice_constants_ASE
+from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_ASE         import get_energies_across_lattice_constants_ASE
+from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_VASP        import get_energies_across_lattice_constants_VASP
+from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_Manual_Mode import get_energies_across_lattice_constants_in_Manual_Mode
 
-from plotting_methods import plot_energy_vs_lattice_constants_1D, plot_energy_vs_lattice_constants_1D
-
-def get_value(value_name, the_dictionary, name_of_dictionary, is_default, default=None):
-	if value_name in the_dictionary.keys():
-		return the_dictionary[value_name]
-	else:
-		if is_default:
-			return default
-		else:
-			print('==================================================')
-			print('Error in the '+str(name_of_dictionary)+' dictionary')
-			print(str(value_name)+' is not in the '+str(name_of_dictionary)+' dictionary')
-			print(str(value_name)+' is required. Put in a value for this.')
-			print('See the manual at latticefinder.readthedocs.io for more information')
-			print('This program will finish without continuing.')
-			print('==================================================')
+from LatticeFinder.LatticeFinder.plotting_methods import plot_energy_vs_lattice_constants_1D, plot_energy_vs_lattice_constants_2D
 
 class LatticeFinder_Program:
 	"""
 	This program is designed to give plots and data to help obtain the optimal lattice constants for a 2D and 3D system.
 	"""
-	def __init__(self, input_information, output_information, no_of_cpus=1)
+	def __init__(self, symbol, lattice_type, lattice_constant_parameters, calculator, size=(1,1,1), directions=None, miller=None, limits=None, no_of_cpus=1):
 		# input options required for obtaining lattice constants
-		self.input_information = input_information
-		self.check_input_information()
+		self.check_input_information(symbol, lattice_type, lattice_constant_parameters, calculator, size, directions, miller)
 		# Information about how to make plots
-		self.output_information = output_information
-		self.check_output_information()
+		self.check_output_information(limits)
 		# Other options
 		self.no_of_cpus = no_of_cpus
 		# Run the program
 		self.run()
 
-	def check_input_information(self):
+	def check_input_information(self, symbol, lattice_type, lattice_constant_parameters, calculator, size, directions, miller):
+		"""
+		This method will take the input data from input_information, set it ready for running in this program, and do some checking of the varables in input_information to make sure that are in a correct format.
+		"""
 		# General options
-		self.symbol = get_value('symbol',self.input_information,'input_information',False)
-		self.lattice_type = get_value('lattice_type',self.input_information,'input_information',False)
-		self.lattice_type = eval(self.lattice_type)
-		self.lattice_constant_parameters = get_value('lattice_constant_parameters',self.input_information,'input_information',False)
-		self.calculator = get_value('calculator',self.input_information,'input_information',False) # This could be a string called 'VASP'
+		self.symbol = symbol
+		self.lattice_type_name = str(lattice_type)
+		self.lattice_type = eval(lattice_type)
+		self.lattice_constant_parameters = lattice_constant_parameters
+		self.calculator = calculator # This could be a string called 'VASP' or 'Manual Mode'
 		if self.calculator == 'VASP':
 			self.VASP_Input_files = 'VASP_Files'
-		self.size = get_value('size',self.input_information,'input_information',True,default=(1,1,1))
+		elif self.calculator == 'Manual Mode':
+			pass
+		self.size = size
 		# Other options about constructing the cell
-		self.directions = get_value('directions',self.input_information,'input_information',True,default=None)
-		self.miller = get_value('miller',self.input_information,'input_information',True,default=None)
+		self.directions = directions
+		self.miller = miller
+		# The file of where to save lattice constant data to
+		self.lattice_data_file = 'lattice_data.txt'
 
-	def check_output_information(self):
+	def check_output_information(self, limits):
+		"""
+		This method will check the variables for making output data such as plots.
+		"""
 		# Plotting variables
-		self.limits = get_value('limits',self.output_information,'output_information',True,default=None)
+		if isinstance(limits,dict):
+			self.limits = limits
+		else:
+			self.limits = {'c': limits}
+		for key, value in self.limits.items():
+			if value == None:
+				self.limits[key] = (-float('inf'), float('inf'))
 
 	############################################################################################################################
 
 	def run(self):
 		"""
-
+		This method will run the LatticeFinder program commands. 
 		"""
 		# Perform checks on the lattice_constant_parameters to make sure it is in an acceptable format
 		self.lattice_constant_parameters_checks(self.lattice_constant_parameters)
@@ -79,14 +80,14 @@ class LatticeFinder_Program:
 		self.lattice_constant_generator = lattice_constant_generator(self.lattice_constant_parameters)
 		self.lattice_constant_types = self.lattice_constant_generator.get_lattice_constant_types()
 		# Set up lattice_data.txt for writing the energies of lattice constants into. 
-		self.lattice_data_file = 'lattice_data.txt'
 		energies_vs_lattice_constants = self.setup_energies_vs_lattice_constants()
 		# Process the range of lattice constants and determine the minimum energy and lattice constant, as well as the projected lattice constant
 		self.get_data(energies_vs_lattice_constants)
+		energies_vs_lattice_constants, energy_vs_volumes = self.divide_up_energies_and_volumes(energies_vs_lattice_constants)
 		self.minimum_energy, self.lowest_energy_lattice_constants = self.get_minimum_energy(energies_vs_lattice_constants)
 		# Plot the data and give other information about the system
 		self.plot_energy_vs_lattice_constants(energies_vs_lattice_constants)
-		self.get_other_data_about_system(self.minimum_energy, self.lowest_energy_lattice_constants)
+		self.get_other_data_about_system(self.minimum_energy, self.lowest_energy_lattice_constants, energy_vs_volumes)
 
 	############################################################################################################################
 
@@ -94,10 +95,11 @@ class LatticeFinder_Program:
 		"""
 `		This method is designed to check that lattice_constant_parameters in in the correct format before contining
 		"""
+		
 		if isinstance(lattice_constant_parameters,tuple) or isinstance(lattice_constant_parameters,list):
 			pass
 		elif isinstance(lattice_constant_parameters,dict):
-			for lattice_constant_type, lattice_constant_parameter in self.lattice_constant_parameters.items():
+			for lattice_constant_type, lattice_constant_parameter in lattice_constant_parameters.items():
 				if isinstance(lattice_constant_parameter,tuple) or isinstance(lattice_constant_parameter,list):
 					continue
 		else:
@@ -128,8 +130,14 @@ class LatticeFinder_Program:
 			for line in lattice_data_FILE:
 				lattice_constants, energy_per_atom = line.rstrip('\n').split(':')
 				lattice_constants = eval(lattice_constants)
+				if len(self.lattice_constant_types) == 1:
+					energy_per_atom, volume = energy_per_atom.rstrip('\n').split('(')
+					volume = float(volume.replace('Ang/atom)',''))
 				energy_per_atom = float(energy_per_atom)
-				energies_vs_lattice_constants[lattice_constants] = energy_per_atom
+				if len(self.lattice_constant_types) == 1:
+					energies_vs_lattice_constants[lattice_constants] = (energy_per_atom,volume)
+				else:
+					energies_vs_lattice_constants[lattice_constants] = energy_per_atom
 		return energies_vs_lattice_constants
 
 	def setup_initial_data_file(self):
@@ -154,12 +162,29 @@ class LatticeFinder_Program:
 
 		"""
 		if self.calculator == 'VASP':
-			get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,self.miller)
+			get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller)
 			exit()
 		else:
-			get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,miller,self.calculator,self.no_of_cpus,self.lattice_data_file,self.energies_vs_lattice_constants)
+			get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants)
 
-	############################################################################################################################
+
+	def divide_up_energies_and_volumes(self, energies_vs_lattice_constants):
+
+		if len(self.lattice_constant_types) == 1:
+			new_energies_vs_lattice_constants = {}
+			energy_vs_volumes = [[], []]
+			energies_vs_lattice_constants = sorted(energies_vs_lattice_constants.items())
+			total_no_of_enteries = len(energies_vs_lattice_constants)
+			for _ in range(total_no_of_enteries):
+				lattice_constant, (energy, volume) = energies_vs_lattice_constants.pop(0)
+				new_energies_vs_lattice_constants[lattice_constant] = energy
+				energy_vs_volumes[0].append(volume)
+				energy_vs_volumes[1].append(energy)
+			energies_vs_lattice_constants = new_energies_vs_lattice_constants
+		else:
+			energy_vs_volumes = None
+		return energies_vs_lattice_constants, energy_vs_volumes
+
 
 	def get_minimum_energy(self,energies_vs_lattice_constants):
 		"""
@@ -182,13 +207,11 @@ class LatticeFinder_Program:
 
 		"""
 		if len(self.lattice_constant_types) == 1:
-			self.plot_energy_vs_lattice_constants_1D(energies_vs_lattice_constants)
+			plot_energy_vs_lattice_constants_1D(energies_vs_lattice_constants, self.limits, self.minimum_energy, self.lowest_energy_lattice_constants)
 		if len(self.lattice_constant_types) == 2:
-			self.plot_energy_vs_lattice_constants_2D(energies_vs_lattice_constants)
+			plot_energy_vs_lattice_constants_2D(energies_vs_lattice_constants, self.limits, self.minimum_energy, self.lowest_energy_lattice_constants)
 
-	############################################################################################################################
-
-	def get_other_data_about_system(self,minimum_energy,lowest_energy_lattice_constants):
+	def get_other_data_about_system(self,minimum_energy,lowest_energy_lattice_constants,energy_vs_volumes=None):
 		"""
 
 		"""
@@ -207,7 +230,19 @@ class LatticeFinder_Program:
 		Volume_per_atom = float(Volume)/float(no_of_atoms)
 		stress_tensor = bulk_system.get_stress(voigt=False)
 
-		bulk_modulus = 1
+		if len(self.lattice_constant_types) == 1:
+			from ase.units import kJ
+			from ase.eos import EquationOfState
+			volumes = energy_vs_volumes[0]
+			energies = energy_vs_volumes[1]
+			eos = EquationOfState(volumes, energies, eos='sj')
+			v0, e0, BB = eos.fit()
+			bulk_modulus = (BB / kJ) * 1.0e24
+			name_eos = 'Equation_of_State_Plot'
+			# Save figure
+			eos.plot(name_eos+'.png',show=True)
+			eos.plot(name_eos+'.eps')
+			eos.plot(name_eos+'.svg')
 
 		with open('results_file.txt','w') as results_fileTXT:
 			results_fileTXT.write('Symbol: '+str(self.symbol)+'\n')
@@ -228,7 +263,8 @@ class LatticeFinder_Program:
 			results_fileTXT.write('Volume per atom: '+str(Volume_per_atom)+' Angstroms^3/Atom\n')
 			results_fileTXT.write('\n')
 			results_fileTXT.write('Stress tensor:\n'+str(stress_tensor)+'\n')
-			results_fileTXT.write('\n')
-			results_fileTXT.write('Bulk Modulus: '+str(bulk_modulus)+' GPa\n')
+			if len(self.lattice_constant_types) == 1:
+				results_fileTXT.write('\n')
+				results_fileTXT.write('Bulk Modulus: '+str(bulk_modulus)+' GPa\n')
 
 	############################################################################################################################
