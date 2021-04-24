@@ -18,7 +18,7 @@ def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, minimum_e
 			lattice_energies.append(energy_per_atom)
 	plt.scatter(lattice_point_c, lattice_energies, s=5, alpha=0.5,zorder=10)
 	for cc_point in lowest_energy_lattice_constants:
-		label = 'c = '+str(cc_point)+' Ang' #for aa_point, cc_point in lowest_energy_lattice_constants
+		label = 'c = '+str(cc_point)+' '+r'$\AA$' #for aa_point, cc_point in lowest_energy_lattice_constants
 		plt.scatter(lowest_energy_lattice_constants, minimum_energy, color='r', s=5, alpha=0.5,zorder=20, label=label)
 	plt.xlabel('Lattice Constant ('+r'$\AA$'+')')
 	plt.ylabel('Energy per Atom ('+r'$eV/Atom$'+')')
@@ -29,7 +29,7 @@ def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, minimum_e
 	#plt.hlines(minimum_energy,lattice_energies_low - x_diff,lattice_energies_high + x_diff,color='k',linestyles='dashed',zorder=1)
 	plt.xlim((lattice_point_low,lattice_point_high))
 	plt.ylim((lattice_energies_low,lattice_energies_high))
-	leg = plt.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$ev/Atom$')
+	leg = plt.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$eV/Atom$')
 	plt.savefig('Energy_Vs_Lattice_Constant.png')
 	plt.savefig('Energy_Vs_Lattice_Constant.svg')
 	plt.savefig('Energy_Vs_Lattice_Constant.eps')
@@ -99,7 +99,7 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	for aa_point, cc_point in lowest_energy_lattice_constants:
 		lowest_lattice_points_a.append(aa_point)
 		lowest_lattice_points_c.append(cc_point)
-		label = '(a = '+str(aa_point)+' Ang, c = '+str(cc_point)+' Ang)' #for aa_point, cc_point in lowest_energy_lattice_constants
+		label = '(a = '+str(aa_point)+' '+r'$\AA$'+', c = '+str(cc_point)+' '+r'$\AA$'+')' #for aa_point, cc_point in lowest_energy_lattice_constants
 		ax.scatter(lowest_lattice_points_a,lowest_lattice_points_c,[lattice_energies_low]*len(lowest_lattice_points_a),color='red',zorder=40, label=label)
 		#ax.contour(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, 10, lw=3, colors="k", linestyles="solid")
 	leg = ax.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' eV/Atom', facecolor='white', framealpha=0.8)#,handlelength=0, handletextpad=0, markerscale=0)
@@ -108,7 +108,7 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	ax.scatter(lowest_lattice_points_a,lowest_lattice_points_c,[minimum_energy]*len(lowest_lattice_points_a),color='red',zorder=-9)
 
 	cbar = plt.colorbar(pad=0.12)
-	cbar.set_label('Cohensive Energy ('+r'$ev/Atom$'+')', rotation=270, labelpad=20)
+	cbar.set_label('Cohensive Energy ('+r'$eV/Atom$'+')', rotation=270, labelpad=20)
 
 	plt.tight_layout()
 	plt.savefig('Energy_Vs_Lattice_Constant.png')
@@ -130,9 +130,9 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	
 	#import pdb; pdb.set_trace()
 	for aa_point, cc_point in lowest_energy_lattice_constants:
-		label = '(a = '+str(aa_point)+', c = '+str(cc_point)+')' #for aa_point, cc_point in lowest_energy_lattice_constants
+		label = '(a = '+str(aa_point)+' '+r'$\AA$'+', c = '+str(cc_point)+' '+r'$\AA$'+')' #for aa_point, cc_point in lowest_energy_lattice_constants
 		plt.plot(lowest_lattice_points_a, lowest_lattice_points_c, 'ro', label=label, zorder=30)
-	leg = ax.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$ev/Atom$', facecolor='white', framealpha=0.8) #,handlelength=0, handletextpad=0, markerscale=0)
+	leg = ax.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$eV/Atom$', facecolor='white', framealpha=0.8) #,handlelength=0, handletextpad=0, markerscale=0)
 	#leg.set_facecolor('white')
 	#for item in leg.legendHandles:
 	#	item.set_visible(False)
