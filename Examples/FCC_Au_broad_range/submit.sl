@@ -1,11 +1,11 @@
 #!/bin/bash -e
-#SBATCH -J HCP_Au_2_lattice_constants_Simple
+#SBATCH -J FCC_Au_broad_range
 #SBATCH -A uoo00084         # Project Account
 
 #SBATCH --partition=large
 #SBATCH --time=12:00:00     # Walltime
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8
+#SBATCH --ntasks-per-node=1
 #SBATCH --mem-per-cpu=2000MB
 
 #SBATCH --output=slurmjob_%A.out

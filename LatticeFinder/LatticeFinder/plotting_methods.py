@@ -1,3 +1,4 @@
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
@@ -76,8 +77,8 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	levels_confull = np.linspace(min(lattice_energies), max(lattice_energies), 1000)
 
 	# https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html
-	ax.plot_surface(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, rstride=1, cstride=1,cmap='viridis', edgecolor='none', alpha=0.2)
-	ax.contour3D(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_conf, cmap='viridis')
+	ax.plot_surface(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, rstride=1, cstride=1,cmap='viridis', edgecolor='none', alpha=0.2, zorder=10)
+	ax.contour3D(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_conf, cmap='viridis', zorder=11)
 	ax.set_xlabel('Lattice Constant (a) ('+r'$\AA$'+')')
 	ax.set_ylabel('Lattice Constant (c) ('+r'$\AA$'+')')
 	ax.set_zlabel('Cohensive Energy ('+r'$eV/Atom$'+')')
@@ -90,7 +91,7 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	ax.set_ylim((lattice_point_c_low,lattice_point_c_high))
 	ax.set_zlim((lattice_energies_low,lattice_energies_high))
 	# https://stackoverflow.com/questions/35445424/surface-and-3d-contour-in-matplotlib
-	ax.contour(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_conf, cmap='viridis', linestyles="solid",offset=lattice_energies_low,zorder=10)
+	ax.contour(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_conf, cmap='viridis', linestyles="solid",offset=lattice_energies_low,zorder=-11)
 	plt.contourf(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_confull, cmap='viridis', alpha=0.2, antialiased=True, linestyles=None,offset=lattice_energies_low,zorder=-10)
 	
 	lowest_lattice_points_a = []
@@ -99,11 +100,12 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 		lowest_lattice_points_a.append(aa_point)
 		lowest_lattice_points_c.append(cc_point)
 		label = '(a = '+str(aa_point)+' Ang, c = '+str(cc_point)+' Ang)' #for aa_point, cc_point in lowest_energy_lattice_constants
-		ax.scatter(lowest_lattice_points_a,lowest_lattice_points_c,[lattice_energies_low]*len(lowest_lattice_points_a),color='red',zorder=-5, label=label)
+		ax.scatter(lowest_lattice_points_a,lowest_lattice_points_c,[lattice_energies_low]*len(lowest_lattice_points_a),color='red',zorder=40, label=label)
 		#ax.contour(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, 10, lw=3, colors="k", linestyles="solid")
-	leg = ax.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' eV/Atom')#,handlelength=0, handletextpad=0, markerscale=0)
+	leg = ax.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' eV/Atom', facecolor='white', framealpha=0.8)#,handlelength=0, handletextpad=0, markerscale=0)
+	#leg.set_facecolor('white')
 	
-	ax.scatter(lowest_lattice_points_a,lowest_lattice_points_c,[minimum_energy]*len(lowest_lattice_points_a),color='red',zorder=20)
+	ax.scatter(lowest_lattice_points_a,lowest_lattice_points_c,[minimum_energy]*len(lowest_lattice_points_a),color='red',zorder=-9)
 
 	cbar = plt.colorbar(pad=0.12)
 	cbar.set_label('Cohensive Energy ('+r'$ev/Atom$'+')', rotation=270, labelpad=20)
@@ -119,18 +121,19 @@ def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_e
 	fig, ax = plt.subplots()
 	#ax.view_init(azim=0, elev=90)
 	
-	contours = plt.contour(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_conf, cmap='viridis')
+	contours = plt.contour(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_conf, cmap='viridis', zorder=10)
 	plt.clabel(contours, inline=True, fontsize=10)
 
 	levels_confull = np.linspace(min(lattice_energies), max(lattice_energies), 1000)
-	plt.contourf(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_confull, cmap='viridis', alpha=0.2, antialiased=True, linestyles=None)
+	plt.contourf(lattice_point_a_matrix, lattice_point_c_matrix, lattice_energies_matrix, levels=levels_confull, cmap='viridis', alpha=0.2, antialiased=True, linestyles=None, zorder=20)
 	#plt.imshow(lattice_energies_matrix, extent=[lattice_point_a_low, lattice_point_a_high, lattice_point_c_low, lattice_point_c_high], origin='lower',cmap='viridis', alpha=0.2) # , interpolation='bilinear'
 	
 	#import pdb; pdb.set_trace()
 	for aa_point, cc_point in lowest_energy_lattice_constants:
 		label = '(a = '+str(aa_point)+', c = '+str(cc_point)+')' #for aa_point, cc_point in lowest_energy_lattice_constants
-		plt.plot(lowest_lattice_points_a, lowest_lattice_points_c, 'ro', label=label)
-	leg = plt.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$ev/Atom$') #,handlelength=0, handletextpad=0, markerscale=0)
+		plt.plot(lowest_lattice_points_a, lowest_lattice_points_c, 'ro', label=label, zorder=30)
+	leg = ax.legend(title='Cohensive Energy: '+str(round(minimum_energy,5))+' '+r'$ev/Atom$', facecolor='white', framealpha=0.8) #,handlelength=0, handletextpad=0, markerscale=0)
+	#leg.set_facecolor('white')
 	#for item in leg.legendHandles:
 	#	item.set_visible(False)
 

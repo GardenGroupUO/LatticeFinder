@@ -92,13 +92,9 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 		job.get()
 	print('Finished performing calculations upon Lattices')
 	print('Performing last finishing off pieces of work')
-	import pdb; pdb.set_trace()
-	energies_vs_lattice_constants = {}
-	for key, value in dictionary_multiprocessing.items():
-		energies_vs_lattice_constants[key] = value
-		del energies_vs_lattice_constants[key]
+	energies_vs_lattice_constants = dict(dictionary_multiprocessing)
 	#now we are done, kill the listener
-	q.put('kill')
+	qq.put('kill')
 	pool.close()
 	pool.join()
 	print('Finished performing last finishing off pieces of work')
