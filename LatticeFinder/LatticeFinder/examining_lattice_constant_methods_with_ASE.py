@@ -18,20 +18,7 @@ def get_energies_across_lattice_constants_ASE_one_cpu(lattice_type,symbol,lattic
 	for latticeconstants in lattice_constant_generator:
 		get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants)
 
-def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions=None,miller=None,calculator=None,no_of_cpus=1,lattice_data_file=None,energies_vs_lattice_constants={}):
-	"""
-
-	"""
-	with mp.Pool(processes=no_of_cpus) as pool: # pool = mp.Pool()
-		results = pool.map_async(get_energies_across_lattice_constants_ASE_single, lattice_constant_generator)
-		results.wait()
-	offsprings = results.get()
-
-def get_volume_per_atom(bulk_system):
-	volume = round(bulk_system.get_volume()/float(len(bulk_system)),9)
-	return volume
-
-def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants):
+def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants, q=None):
 	"""
 
 	"""
@@ -54,11 +41,15 @@ def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,lattice
 	else:
 		volume = None
 		energies_vs_lattice_constants[latticeconstants_for_dict] = energy_per_atom
-	save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
+	if not q == None
+		res = (lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
+		q.put(res)
+	else:
+		save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
 
-def make_lock_file(self):
-	with open('file.lock','w') as lockFILE:
-			write('')
+def get_volume_per_atom(bulk_system):
+	volume = round(bulk_system.get_volume()/float(len(bulk_system)),9)
+	return volume
 
 def save_datum_to_file(lattice_data_file,latticeconstants,energy_per_atom, volume=None):
 	"""
@@ -69,4 +60,34 @@ def save_datum_to_file(lattice_data_file,latticeconstants,energy_per_atom, volum
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+'\n')
 		else:
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+' ('+str(volume)+')\n')
-			
+
+# --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------v
+import multiprocessing as mp
+def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions=None,miller=None,calculator=None,no_of_cpus=1,lattice_data_file=None,energies_vs_lattice_constants={}):
+	"""
+
+	"""
+	manager = mp.Manager()
+	q = manager.Queue()    
+	pool = mp.Pool(processes=no_of_cpus)
+	#put listener to work first
+	watcher = pool.apply_async(listener, (q,))
+	#fire off workers
+	jobs = []
+	for latticeconstants in lattice_constant_generator:
+		task = (lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants, q)
+		job = pool.apply_async(worker, task)
+		jobs.append(job)
+	# collect results from the workers through the pool result queue
+	for job in jobs: 
+		job.get()
+	#now we are done, kill the listener
+	pool.close()
+	pool.join()
+
+def listener(q):
+    '''listens for messages on the q, writes to file. '''	
+    m = q.get()
+    lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume = m
+    save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
+
