@@ -41,7 +41,7 @@ def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,lattice
 	else:
 		volume = None
 		energies_vs_lattice_constants[latticeconstants_for_dict] = energy_per_atom
-	if not q == None
+	if not q is None:
 		res = (lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
 		q.put(res)
 	else:
@@ -76,7 +76,7 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	jobs = []
 	for latticeconstants in lattice_constant_generator:
 		task = (lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,calculator,lattice_data_file,energies_vs_lattice_constants, q)
-		job = pool.apply_async(worker, task)
+		job = pool.apply_async(get_energies_across_lattice_constants_ASE_single, task)
 		jobs.append(job)
 	# collect results from the workers through the pool result queue
 	for job in jobs: 
