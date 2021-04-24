@@ -84,6 +84,7 @@ class LatticeFinder_Program:
 		energies_vs_lattice_constants = self.setup_energies_vs_lattice_constants()
 		# Process the range of lattice constants and determine the minimum energy and lattice constant, as well as the projected lattice constant
 		self.get_data(energies_vs_lattice_constants)
+		self.sort_data_file()
 		energies_vs_lattice_constants, energy_vs_volumes = self.divide_up_energies_and_volumes(energies_vs_lattice_constants)
 		self.minimum_energy, self.lowest_energy_lattice_constants = self.get_minimum_energy(energies_vs_lattice_constants)
 		# Plot the data and give other information about the system
@@ -174,6 +175,25 @@ class LatticeFinder_Program:
 		else:
 			get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants)
 
+	def sort_data_file(self):
+		"""
+		If you are using multiple processes, the ordering or lattice constants in the lattice_data.txt can become muddled up
+		# This method reorders lines
+		"""
+		new_suffix = '.new'
+		with open(self.lattice_data_file+new_suffix,'w') as lattice_data_FILE_NEW:
+			lines = []
+			with open(self.lattice_data_file,'r') as lattice_data_FILE_OLD:
+				for _ in range(12):
+					lattice_data_FILE_NEW.write(lattice_data_FILE_OLD.readline())
+				for line in lattice_data_FILE_OLD:
+					lattice_constants = eval(line.rstrip().split(':')[0])
+					lines.append((lattice_constants,line))
+			lines.sort()
+			for lattice_constants, line in lines:
+				lattice_data_FILE_NEW.write(line)
+		os.remove(self.lattice_data_file)
+		os.rename(self.lattice_data_file+new_suffix,self.lattice_data_file)
 
 	def divide_up_energies_and_volumes(self, energies_vs_lattice_constants):
 
