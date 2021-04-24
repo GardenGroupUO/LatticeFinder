@@ -7,7 +7,11 @@ def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_const
 	"""
 
 	"""
+	make_VASP_folders(lattice_type,symbol,lattice_constant_generator,size,directions,miller,vasp_inputs,folder_name)
+	exit()
 
+
+def make_VASP_folders(lattice_type,symbol,lattice_constant_generator,size,directions=None,miller=None,vasp_inputs='VASP_Files',folder_name='VASP_Clusters'):
 	if not os.path.exists(folder_name):
 		os.makedirs(folder_name)
 	for latticeconstants in lattice_constant_generator:
