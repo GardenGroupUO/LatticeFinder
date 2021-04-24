@@ -88,7 +88,7 @@ class LatticeFinder_Program:
 		# Set up lattice_data.txt for writing the energies of lattice constants into. 
 		energies_vs_lattice_constants = self.setup_energies_vs_lattice_constants()
 		# Process the range of lattice constants and determine the minimum energy and lattice constant, as well as the projected lattice constant
-		self.get_data(energies_vs_lattice_constants)
+		energies_vs_lattice_constants = self.get_data(energies_vs_lattice_constants)
 		self.sort_data_file()
 		energies_vs_lattice_constants, energy_vs_volumes = self.divide_up_energies_and_volumes(energies_vs_lattice_constants)
 		self.minimum_energy, self.lowest_energy_lattice_constants = self.get_minimum_energy(energies_vs_lattice_constants)
@@ -181,7 +181,8 @@ class LatticeFinder_Program:
 
 			get_energies_across_lattice_constants_in_Manual_Mode(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.Manual_Mode_Cluster_Folder)
 		else:
-			get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants)
+			energies_vs_lattice_constants = get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants)
+		return energies_vs_lattice_constants
 
 	def sort_data_file(self):
 		"""

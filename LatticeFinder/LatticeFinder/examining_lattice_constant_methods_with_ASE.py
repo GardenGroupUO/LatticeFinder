@@ -8,17 +8,19 @@ def get_energies_across_lattice_constants_ASE(lattice_type,symbol,lattice_consta
 	global calculator_ASE
 	calculator_ASE = calculator
 	if no_of_cpus == 1:
-		get_energies_across_lattice_constants_ASE_one_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,lattice_data_file,energies_vs_lattice_constants)
+		energies_vs_lattice_constants = get_energies_across_lattice_constants_ASE_one_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,lattice_data_file,energies_vs_lattice_constants)
 	else:
-		get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,no_of_cpus,lattice_data_file,energies_vs_lattice_constants)
+		energies_vs_lattice_constants = get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions,miller,no_of_cpus,lattice_data_file,energies_vs_lattice_constants)
 	print('================================================================================')
+	return energies_vs_lattice_constants
 
 def get_energies_across_lattice_constants_ASE_one_cpu(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions=None,miller=None,lattice_data_file=None,energies_vs_lattice_constants={}):
 	"""
 
 	"""
 	for latticeconstants in lattice_constant_generator:
-		get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,lattice_data_file,energies_vs_lattice_constants)
+		get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,lattice_data_file,energies_vs_lattice_constants,qq=None)
+	return energies_vs_lattice_constants
 
 def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,lattice_data_file,energies_vs_lattice_constants,qq=None):
 	"""
@@ -98,6 +100,7 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	pool.close()
 	pool.join()
 	print('Finished performing last finishing off pieces of work')
+	return energies_vs_lattice_constants
 
 def listener(qq):
 	'''listens for messages on the q, writes to file. '''	
