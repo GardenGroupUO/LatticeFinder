@@ -35,6 +35,7 @@ def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,lattice
 	print(latticeconstants)
 	bulk_system = lattice_type(symbol=symbol, latticeconstant=latticeconstants, size=size) #, directions=directions, miller=miller)
 	global calculator_ASE
+
 	bulk_system.set_calculator(calculator_ASE)
 	energy = bulk_system.get_potential_energy(bulk_system)
 	energy_per_atom = energy/float(len(bulk_system))
@@ -70,13 +71,17 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	"""
 
 	"""
+	# solution from https://stackoverflow.com/questions/13446445/python-multiprocessing-safely-writing-to-a-file
 	manager = mp.Manager()
 	qq = manager.Queue()    
 	pool = mp.Pool(processes=no_of_cpus)
 	#put listener to work first
-	watcher = pool.apply_async(listener, (q,))
+	watcher = pool.apply_async(listener, (qq,))
 	#fire off workers
 	dictionary_multiprocessing = manager.dict()
+	for key, value in energies_vs_lattice_constants.items():
+		dictionary_multiprocessing[key] = value
+	del energies_vs_lattice_constants
 	jobs = []
 	for latticeconstants in lattice_constant_generator:
 		task = (lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,lattice_data_file,dictionary_multiprocessing,qq)
@@ -85,15 +90,19 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	# collect results from the workers through the pool result queue
 	for job in jobs: 
 		job.get()
-	for key, value in dictionary_multiprocessing.items()
-	energies_vs_lattice_constants[key] = value
+	for key, value in dictionary_multiprocessing.items():
+		energies_vs_lattice_constants[key] = value
 	#now we are done, kill the listener
+	q.put('kill')
 	pool.close()
 	pool.join()
 
-def listener(q):
-    '''listens for messages on the q, writes to file. '''	
-    m = q.get()
-    lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume = m
-    save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
+def listener(qq):
+	'''listens for messages on the q, writes to file. '''	
+	while 1:
+		mm = qq.get()
+		if mm == 'kill':
+			break
+		lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume = mm
+		save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
 

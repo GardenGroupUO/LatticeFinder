@@ -23,7 +23,7 @@ directions=[]
 miller=[]
 
 limits = {'a': (2.6,3.2), 'c': (4.4,5.0)}
-no_of_cpus=4
+no_of_cpus = 8
 
 
 LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, limits=limits, no_of_cpus=no_of_cpus)
