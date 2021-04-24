@@ -162,10 +162,11 @@ class LatticeFinder_Program:
 			lattice_data_FILE.write('\n')
 			lattice_data_FILE.write('Lattice Constant Results: \n')
 			lattice_data_FILE.write('\n')
+			to_write_to = 'Lattice constant ('+str(','.join(self.lattice_constant_types))+')/Ang: Energy/eV'
 			if len(self.lattice_constant_types) == 1:
-				lattice_data_FILE.write('Lattice constant ('+str(','.join(self.lattice_constant_types))+')/Ang: Energy/eV (Volume (Ang^3 per atom))\n')
-			else:
-				lattice_data_FILE.write('Lattice constant ('+str(','.join(self.lattice_constant_types))+'/Ang: Energy/eV\n')
+				to_write_to += ' (Volume (Ang^3 per atom))'
+			to_write_to += '\n'
+			lattice_data_FILE.write(to_write_to)
 			lattice_data_FILE.write('----------------------------------------------\n')
 
 	############################################################################################################################
