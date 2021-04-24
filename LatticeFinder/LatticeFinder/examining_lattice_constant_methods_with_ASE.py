@@ -79,9 +79,9 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	watcher = pool.apply_async(listener, (qq,))
 	#fire off workers
 	dictionary_multiprocessing = manager.dict()
-	for key, value in energies_vs_lattice_constants.items():
-		dictionary_multiprocessing[key] = value
+	dictionary_multiprocessing.update(energies_vs_lattice_constants)
 	del energies_vs_lattice_constants
+	print('Performing calculations upon Lattices')
 	jobs = []
 	for latticeconstants in lattice_constant_generator:
 		task = (lattice_type,symbol,latticeconstants,lattice_constant_types,size,directions,miller,lattice_data_file,dictionary_multiprocessing,qq)
@@ -90,16 +90,22 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	# collect results from the workers through the pool result queue
 	for job in jobs: 
 		job.get()
+	print('Finished performing calculations upon Lattices')
+	print('Performing last finishing off pieces of work')
+	import pdb; pdb.set_trace()
+	energies_vs_lattice_constants = {}
 	for key, value in dictionary_multiprocessing.items():
 		energies_vs_lattice_constants[key] = value
+		del energies_vs_lattice_constants[key]
 	#now we are done, kill the listener
 	q.put('kill')
 	pool.close()
 	pool.join()
+	print('Finished performing last finishing off pieces of work')
 
 def listener(qq):
 	'''listens for messages on the q, writes to file. '''	
-	while 1:
+	while True:
 		mm = qq.get()
 		if mm == 'kill':
 			break

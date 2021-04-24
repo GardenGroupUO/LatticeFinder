@@ -1,9 +1,9 @@
 from LatticeFinder import LatticeFinder_Program
-import numpy as np
 
 symbol = 'Au'
 lattice_type = 'FaceCenteredCubic'
-lattice_constant_parameters = list(np.arange(3.0,3.8,0.1))+list(np.arange(3.8,4.5,0.01))+list(np.arange(4.5,5.01,0.1))
+
+lattice_constant_parameters = (3.0,5.0,0.1)
 
 from asap3.Internal.BuiltinPotentials import Gupta
 # Parameter sequence: [p, q, a, xi, r0]
@@ -16,6 +16,9 @@ size=(16,16,16)
 
 directions=[]
 miller=[]
-no_of_cpus=1
 
-LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus)
+limits = None
+
+no_of_cpus = 2
+
+LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, limits=limits, no_of_cpus=no_of_cpus)

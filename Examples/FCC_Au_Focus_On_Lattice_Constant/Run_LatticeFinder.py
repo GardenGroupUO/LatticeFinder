@@ -3,6 +3,7 @@ import numpy as np
 
 symbol = 'Au'
 lattice_type = 'FaceCenteredCubic'
+
 lattice_constant_parameters = (3.8,4.2,0.001)
 
 from asap3.Internal.BuiltinPotentials import Gupta

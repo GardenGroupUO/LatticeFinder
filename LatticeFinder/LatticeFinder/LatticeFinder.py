@@ -45,10 +45,15 @@ class LatticeFinder_Program:
 		self.lattice_type = eval(lattice_type)
 		self.lattice_constant_parameters = lattice_constant_parameters
 		self.calculator = calculator # This could be a string called 'VASP' or 'Manual Mode'
-		if self.calculator == 'VASP':
-			self.VASP_Input_files = 'VASP_Files'
-		elif self.calculator == 'Manual Mode':
-			pass
+		if isinstance(self.calculator,str):
+			self.calculator = self.calculator.lower()
+			if self.calculator == 'vasp':
+				self.VASP_Input_files = 'VASP_Files'
+				self.VASP_Cluster_Folder = 'VASP_Clusters'
+			elif self.calculator == 'manual mode':
+				self.Manual_Mode_Cluster_Folder = 'Manual_Mode_Clusters'
+			else:
+				exit('Error, calculator needs to be a ASE calculator, "VASP" or "Manual Mode".')
 		self.size = size
 		# Other options about constructing the cell
 		self.directions = directions
@@ -169,9 +174,12 @@ class LatticeFinder_Program:
 		"""
 
 		"""
-		if self.calculator == 'VASP':
-			get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller)
-			exit()
+		if self.calculator == 'vasp':
+
+			get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.VASP_Input_files,self.Manual_Mode_Cluster_Folder)
+		elif self.calculator == 'manual mode':
+
+			get_energies_across_lattice_constants_in_Manual_Mode(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.Manual_Mode_Cluster_Folder)
 		else:
 			get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants)
 
