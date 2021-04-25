@@ -15,7 +15,10 @@ def make_VASP_folders(lattice_type,symbol,lattice_constant_generator,size,direct
 	if not os.path.exists(folder_name):
 		os.makedirs(folder_name)
 	for latticeconstants in lattice_constant_generator:
-		name = '_'.join([str(key)+'_'+str(value) for latticeconstant in latticeconstants])
+		if isinstance(latticeconstants,dict):
+			name = '_'.join([str(key)+'_'+str(value) for key, value in latticeconstants.items()])
+		else:
+			name = 'c_'+str(latticeconstants)
 		bulk_system = lattice_type(symbol=symbol, latticeconstant=latticeconstants, size=size) #, directions=directions, miller=miller)
 		save_cluster_to_folder(folder_name,name,'','vasp',bulk_system)
 	copy_VASP_files(folder_name,name,vasp_inputs,slurm_information)
