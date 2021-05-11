@@ -1,7 +1,7 @@
 # The information about the LatticeFinder program
 
 __name__    = 'The LatticeFinder Program'
-__version__ = '1.1.2.3'
+__version__ = '1.1.2.4'
 __author__  = 'Geoffrey Weal and Dr. Anna Garden'
 
 import sys
