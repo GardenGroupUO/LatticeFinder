@@ -5,7 +5,7 @@
 [![PyPI](https://img.shields.io/pypi/v/LatticeFinder)](https://pypi.org/project/LatticeFinder/)
 [![Conda](https://img.shields.io/conda/v/gardengroupuo/latticefinder)](https://anaconda.org/GardenGroupUO/latticefinder)
 [![Documentation](https://img.shields.io/badge/Docs-click%20here-brightgreen)](https://latticefinder.readthedocs.io/en/latest/)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GardenGroupUO/Organisms_Jupyter_Examples/main?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GardenGroupUO/LatticeFinder/main?urlpath=lab)
 [![Licence](https://img.shields.io/github/license/GardenGroupUO/LatticeFinder)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/python/github/GardenGroupUO/LatticeFinder)](https://lgtm.com/projects/g/GardenGroupUO/LatticeFinder/context:python)
 
@@ -23,7 +23,7 @@ If you are new to the LatticeFinder program, it is recommended try it out by run
 
 **Click the Binder button below to try LatticeFinder out on the web! (The Binder page may load quickly or may take 1 or 2 minutes to load)**
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GardenGroupUO/Organisms_Jupyter_Examples/main?urlpath=lab)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GardenGroupUO/LatticeFinder/main?urlpath=lab)
 
 Have fun!
 
@@ -107,7 +107,3 @@ All the information about this program is found online at [latticefinder.readthe
 | Group Website | https://blogs.otago.ac.nz/annagarden/ |
 
 </div>
-
-
-
-

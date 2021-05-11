@@ -2,12 +2,9 @@ from LatticeFinder import LatticeFinder_Program
 import numpy as np
 
 symbol = 'Au'
-lattice_type = 'HexagonalClosedPacked'
+lattice_type = 'FaceCenteredCubic'
 
-#lattice_constant_parameters = {'a': (2.0,5.0,0.1), 'c': (3.0,6.0,0.1)}
-aa_list = np.arange(2.0,5.01,0.1)
-cc_list = np.arange(3.0,6.01,0.1)
-lattice_constant_parameters = {'a': aa_list, 'c': cc_list}
+lattice_constant_parameters = list(np.arange(2.0,3.5,0.1))+list(np.arange(3.5,5.0,0.001))+list(np.arange(5.0,6.0,0.1))
 
 calculator = 'VASP'
 slurm_information = {}
@@ -18,6 +15,7 @@ slurm_information['ntasks_per_node'] = 2
 slurm_information['mem-per-cpu'] = '3G'
 slurm_information['partition'] = 'large'
 slurm_information['email'] = 'geoffreywealslurmnotifications@gmail.com'
+slurm_information['python_version'] = 'Python/3.6.3-gimkl-2017a'
 slurm_information['python_version'] = 'Python/3.6.3-gimkl-2017a'
 slurm_information['vasp_version'] = 'VASP/5.4.4-intel-2017a'
 slurm_information['vasp_execution'] = 'vasp_std'

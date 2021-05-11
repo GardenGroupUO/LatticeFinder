@@ -39,23 +39,27 @@ def get_energies_across_lattice_constants_ASE_single(lattice_type,symbol,lattice
 	global calculator_ASE
 
 	bulk_system.set_calculator(calculator_ASE)
-	energy = bulk_system.get_potential_energy(bulk_system)
-	energy_per_atom = energy/float(len(bulk_system))
+	energy_per_atom = get_energy_per_atom(bulk_system)
 	if one_lattice_constant:
-		volume = get_volume_per_atom(bulk_system)
-		energies_vs_lattice_constants[latticeconstants_for_dict] = (energy_per_atom,volume)
+		volume_per_atom = get_volume_per_atom(bulk_system)
+		energies_vs_lattice_constants[latticeconstants_for_dict] = (energy_per_atom,volume_per_atom)
 	else:
-		volume = None
+		volume_per_atom = None
 		energies_vs_lattice_constants[latticeconstants_for_dict] = energy_per_atom
 	if not qq is None:
-		res = (lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
+		res = (lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume_per_atom)
 		qq.put(res)
 	else:
-		save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume)
+		save_datum_to_file(lattice_data_file,latticeconstants_for_dict,energy_per_atom,volume_per_atom)
+
+def get_energy_per_atom(bulk_system):
+	energy = bulk_system.get_potential_energy(bulk_system)
+	energy_per_atom = energy/float(len(bulk_system))
+	return energy_per_atom
 
 def get_volume_per_atom(bulk_system):
-	volume = round(bulk_system.get_volume()/float(len(bulk_system)),9)
-	return volume
+	volume_per_atom = round(bulk_system.get_volume()/float(len(bulk_system)),9)
+	return volume_per_atom
 
 def save_datum_to_file(lattice_data_file,latticeconstants,energy_per_atom, volume=None):
 	"""
@@ -66,6 +70,18 @@ def save_datum_to_file(lattice_data_file,latticeconstants,energy_per_atom, volum
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+'\n')
 		else:
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+' ('+str(volume)+')\n')
+
+def get_system_from_ASE(lattice_type,symbol,latticeconstants,size,directions,miller,calculator):
+	"""
+
+	"""	
+	bulk_systems = []
+	for a_latticeconstants in latticeconstants:
+		import pdb; pdb.set_trace()
+		bulk_system = lattice_type(symbol=symbol, latticeconstant=a_latticeconstants, size=size)
+		bulk_system.set_calculator(calculator)
+		bulk_systems.append(bulk_system)
+	return bulk_systems
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------v
 import multiprocessing as mp

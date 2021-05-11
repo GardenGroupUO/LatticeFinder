@@ -9,7 +9,7 @@ def get_plotting_lims(lattice_point,percent_diff):
 		lattice_point_high = max(lattice_point) + lattice_point_diff_with_percent
 		return lattice_point_low, lattice_point_high
 
-def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, minimum_energy, lowest_energy_lattice_constants):
+def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, plotting_limits, minimum_energy, lowest_energy_lattice_constants):
 	lattice_point_c = []; lattice_energies = [];
 	lattice_point_c_bottom, lattice_point_c_top = limits['c']
 	for cc_LC, energy_per_atom in sorted(list(lattice_energies_dict.items())):
@@ -35,7 +35,7 @@ def plot_energy_vs_lattice_constants_1D(lattice_energies_dict, limits, minimum_e
 	plt.savefig('Energy_Vs_Lattice_Constant.eps')
 	plt.cla(); plt.clf()
 
-def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, minimum_energy, lowest_energy_lattice_constants):
+def plot_energy_vs_lattice_constants_2D(lattice_energies_dict, limits, plotting_limits, minimum_energy, lowest_energy_lattice_constants):
 	lattice_point_a = []; lattice_point_c = []; lattice_energies = [];
 	lattice_point_a_bottom, lattice_point_a_top = limits['a']
 	lattice_point_c_bottom, lattice_point_c_top = limits['c']

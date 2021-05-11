@@ -2,19 +2,16 @@ from LatticeFinder import LatticeFinder_Program
 import numpy as np
 
 symbol = 'Au'
-lattice_type = 'HexagonalClosedPacked'
+lattice_type = 'FaceCenteredCubic'
 
-#lattice_constant_parameters = {'a': (2.0,5.0,0.1), 'c': (3.0,6.0,0.1)}
-aa_list = np.arange(2.0,5.01,0.1)
-cc_list = np.arange(3.0,6.01,0.1)
-lattice_constant_parameters = {'a': aa_list, 'c': cc_list}
+lattice_constant_parameters = (2.0,6.0,0.1)
 
 calculator = 'VASP'
 slurm_information = {}
 slurm_information['project'] = 'uoo02568'
-slurm_information['time'] = '40:00:00'
+slurm_information['time'] = '2:00:00'
 slurm_information['nodes'] = 1
-slurm_information['ntasks_per_node'] = 2
+slurm_information['ntasks_per_node'] = 8
 slurm_information['mem-per-cpu'] = '3G'
 slurm_information['partition'] = 'large'
 slurm_information['email'] = 'geoffreywealslurmnotifications@gmail.com'

@@ -16,3 +16,6 @@ def save_cluster_to_folder(folder,name,filename_suffix,manual_mode,cluster):
 		write(path_to_folder+'/'+'POSCAR',cluster,format='vasp')
 	else:
 		write(path_to_folder+'/'+name+'.'+filename_suffix,cluster,format='xyz')
+
+def get_system_from_Manual_Mode(latticeconstants,Manual_Mode_Cluster_Folder):
+	pass
