@@ -33,7 +33,7 @@ def find_scripts():
   scripts = []
   scripts_folders = []
   for scripts_folder in scripts_folders:
-    for root, dirs, files in os.walk('BulkLatticeFinder/'+scripts_folder, topdown=False):
+    for root, dirs, files in os.walk('LatticeFinder/'+scripts_folder, topdown=False):
       for file in files:
         if file.endswith('.py') and not 'Main' in file:
           filepath = os.path.relpath(os.path.join(root, file))
@@ -41,17 +41,17 @@ def find_scripts():
       dirs[:] = []
   return sorted(scripts)
 
-setup(name='BulkLatticeFinder',
-      packages=find_packages(root='BulkLatticeFinder'),
+setup(name='LatticeFinder',
+      packages=find_packages(root='LatticeFinder'),
       scripts=find_scripts(),
       version=get_version_number(),
-      description="This program is designed to perform a genetic algorithm global optimisation for nanoclusters.",
+      description="This program is designed to give the lattice constants for a 3D crystal lattice or a 2D system, such as graphene (in development).",
       long_description=get_long_description(),
       long_description_content_type='text/markdown',
       author='Geoffrey R. Weal and Dr. Anna L. Garden',
       author_email='anna.garden@otago.ac.nz',
       url = 'https://blogs.otago.ac.nz/annagarden/',
-      download_url = 'https://github.com/GardenGroupUO/BulkLatticeFinder/archive/v'+str(get_version_number())+'.tar.gz',
+      download_url = 'https://github.com/GardenGroupUO/LatticeFinder/archive/v'+str(get_version_number())+'.tar.gz',
       license='GNU AFFERO GENERAL PUBLIC LICENSE',
       zip_safe=False,
       keywords = ['lattice', 'lattice_constant', 'ase', 'university-of-otago', 'asap3', 'atomic-simulation-environment', 'jupyter-binder', 'otago-university'],
