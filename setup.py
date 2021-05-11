@@ -56,7 +56,10 @@ setup(name='LatticeFinder',
       zip_safe=False,
       keywords = ['lattice', 'lattice_constant', 'ase', 'university-of-otago', 'asap3', 'atomic-simulation-environment', 'jupyter-binder', 'otago-university'],
       install_requires=[
-          'numpy','scipy','matplotlib','ase>=3.19.0'
+          'numpy','scipy','matplotlib','ase>=3.19.0',
+          'Sphinx==3.5.4','sphinx-rtd-theme','sphinxcontrib-applehelp','sphinxcontrib-devhelp',
+          'sphinxcontrib-htmlhelp','sphinxcontrib-jsmath','sphinxcontrib-qthelp',
+          'sphinxcontrib-serializinghtml','sphinxcontrib-wiki'
           ],
       classifiers=[
         'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
