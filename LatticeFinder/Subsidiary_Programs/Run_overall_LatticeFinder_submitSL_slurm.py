@@ -118,7 +118,8 @@ if not wait_between_submissions:
     consec_counter = 0
 submitting_command = "sbatch"
 
-files_to_submit = sorted([xx for xx in os.listdir('.') if xx.startswith('collective_LatticeFinder_submit')])
+submit_SL_starting_name = 'collective_LatticeFinder_submit'
+files_to_submit = sorted([xx for xx in os.listdir('.') if xx.startswith(submit_SL_starting_name)])
 
 for file_to_submit in files_to_submit:
     # determine if it is the right time to submit jobs

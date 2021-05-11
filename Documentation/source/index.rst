@@ -84,6 +84,7 @@ Table of Contents
    How_To_Manually_Enter_Energy_Results_Into_LatticeFinder
    Guide_for_efficienctly_using_LatticeFinder
    Examples_of_Running_LatticeFinder
+   HelpfulPrograms_Subsidiary_Programs
    genindex
    py-modindex
 
