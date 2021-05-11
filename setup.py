@@ -58,7 +58,7 @@ setup(name='LatticeFinder',
       install_requires=[
           'numpy','scipy','matplotlib','ase>=3.21.1',
           'Sphinx==3.5.4','sphinx-rtd-theme','sphinx-tabs','sphinxcontrib-applehelp','sphinxcontrib-devhelp',
-          'sphinxcontrib-htmlhelp','sphinxcontrib-jsmath','sphinxcontrib-plantuml','sphinxcontrib-qthelp',
+          'sphinxcontrib-htmlhelp','sphinxcontrib-jsmath','sphinxcontrib-plantuml==0.19','sphinxcontrib-qthelp',
           'sphinxcontrib-serializinghtml','sphinxcontrib-wiki'
           ],
       classifiers=[
