@@ -81,3 +81,4 @@ setup(name='LatticeFinder',
         'Programming Language :: Python :: 3.9',
         ],
       )
+
