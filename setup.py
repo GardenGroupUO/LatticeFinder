@@ -2,7 +2,7 @@ import os
 from setuptools import setup
 
 def get_version_number():
-  path_to_written_version = 'BulkLatticeFinder/__init__.py'
+  path_to_written_version = 'LatticeFinder/__init__.py'
   with open(path_to_written_version) as initPY:
     for line in initPY:
       if line.startswith('__version__'):
