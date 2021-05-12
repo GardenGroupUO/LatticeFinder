@@ -4,7 +4,7 @@
 Installation: Setting Up LatticeFinder and Pre-Requisites Packages
 ##################################################################
 
-In this article, we will look at how to install the genetic algorithm and all requisites for this program.
+In this article, we will look at how to install the LatticeFinder and all requisites required for this program.
 
 Pre-requisites
 ==============
@@ -220,7 +220,7 @@ where ``"<Path_to_LatticeFinder>"`` is the directory path that you place Lattice
 
 The folder called ``Examples`` contains all the files that one would want to used to use the genetic algorithm for various metals. This includes examples of the basic run code for the genetic algorithm, the ``Interpolation_Script.py`` and ``RunMinimisation.py`` files. 
 
-LatticeFinder contains subsidiary programs that contain other program that may be useful to use when using the LatticeFinder program. This is called ``Subsidiary_Programs`` in LatticeFinder. To execute any of the programs contained within the ``Subsidiary_Programs`` folder, include the following in your ~/.bashrc:
+LatticeFinder contains subsidiary programs that contain other program that may be useful to use when using the LatticeFinder program. This is called ``Subsidiary_Programs`` in LatticeFinder. To execute any of the programs contained within the ``Subsidiary_Programs`` folder, include the following in your ``~/.bashrc``:
 
 .. code-block:: bash
 
@@ -229,7 +229,7 @@ LatticeFinder contains subsidiary programs that contain other program that may b
 Other Useful things to know before you start
 --------------------------------------------
 
-You may use squeue to figure out what jobs are running in slurm. For monitoring what slurm jobs are running, I have found the following alias useful. Include the following in your ~/.bashrc
+You may use squeue to figure out what jobs are running in slurm. For monitoring what slurm jobs are running, I have found the following alias useful. Include the following in your ``~/.bashrc``
 
 .. code-block:: bash
 	
