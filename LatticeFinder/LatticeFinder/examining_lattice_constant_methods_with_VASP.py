@@ -1,5 +1,4 @@
 import os
-from copy import deepcopy
 from ase.io import read
 from shutil import copyfile
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_Manual_Mode import save_cluster_to_folder

@@ -1,4 +1,3 @@
-import multiprocessing as mp
 
 def get_energies_across_lattice_constants_ASE(lattice_type,symbol,lattice_constant_generator,lattice_constant_types,size,directions=None,miller=None,calculator=None,no_of_cpus=1,lattice_data_file=None,energies_vs_lattice_constants={}):
 	"""
@@ -66,7 +65,7 @@ def save_datum_to_file(lattice_data_file,latticeconstants,energy_per_atom, volum
 
 	"""
 	with open(lattice_data_file,'a') as lattice_data_FILE:
-		if volume == None:
+		if volume is None:
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+'\n')
 		else:
 			lattice_data_FILE.write(str(latticeconstants)+': '+str(energy_per_atom)+' ('+str(volume)+')\n')
@@ -94,7 +93,7 @@ def get_energies_across_lattice_constants_ASE_multi_cpu(lattice_type,symbol,latt
 	qq = manager.Queue()    
 	pool = mp.Pool(processes=no_of_cpus)
 	#put listener to work first
-	watcher = pool.apply_async(listener, (qq,))
+	pool.apply_async(listener, (qq,))
 	#fire off workers
 	dictionary_multiprocessing = manager.dict()
 	dictionary_multiprocessing.update(energies_vs_lattice_constants)

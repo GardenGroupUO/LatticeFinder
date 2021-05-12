@@ -166,14 +166,13 @@ for file_to_submit in files_to_submit:
                 break
     if error_counter == number_of_consecutive_error_before_exitting:
         print(dirpath)
-    elif not wait_between_submissions:
-        pass # do not wait any time before proceeding to the next submission.
     else:
-        reached_max_jobs, number_in_queue = check_max_jobs_in_queue_after_next_submission()
-        print('The number of jobs in the queue after submitting job is currently is: '+str(number_in_queue))
-        #print('Will wait for '+str(time_to_wait_max_queue)+' to give time between consecutive submissions')
-        countdown(time_to_wait_max_queue)
-        print('*****************************************************************************')
+        if wait_between_submissions:
+            reached_max_jobs, number_in_queue = check_max_jobs_in_queue_after_next_submission()
+            print('The number of jobs in the queue after submitting job is currently is: '+str(number_in_queue))
+            #print('Will wait for '+str(time_to_wait_max_queue)+' to give time between consecutive submissions')
+            countdown(time_to_wait_max_queue)
+            print('*****************************************************************************')
     if not wait_between_submissions:
         if consec_counter >= max_consec_counter:
             print('----------------------------------------------')

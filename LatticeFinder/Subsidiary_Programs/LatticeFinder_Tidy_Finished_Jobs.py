@@ -18,7 +18,7 @@ for root, dirs, files in os.walk("."):
             system = read(root+'/'+'OUTCAR')
             system.get_potential_energy()
             system.get_volume()
-        except:
+        except BaseException:
             dirs[:] = []
             files[:] = []
             continue

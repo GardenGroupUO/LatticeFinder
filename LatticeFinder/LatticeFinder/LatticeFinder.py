@@ -1,21 +1,14 @@
-import os, time
-import numpy as np
-from shutil import copyfile
-from ase.io import write
-import multiprocessing as mp
 import matplotlib.pyplot as plt
-
-from ase.calculators.calculator import Calculator
 
 from LatticeFinder.LatticeFinder.lattice_constant_generator import lattice_constant_generator
 
-from ase.lattice.cubic import SimpleCubic, FaceCenteredCubic, BodyCenteredCubic, Diamond
-from ase.lattice.tetragonal import SimpleTetragonal, CenteredTetragonal
-from ase.lattice.orthorhombic import SimpleOrthorhombic, BaseCenteredOrthorhombic, FaceCenteredOrthorhombic, BodyCenteredOrthorhombic
-from ase.lattice.monoclinic import SimpleMonoclinic, BaseCenteredMonoclinic
-from ase.lattice.triclinic import Triclinic
-from ase.lattice.hexagonal import Hexagonal, HexagonalClosedPacked, Graphite
-from ase.lattice.compounds import B1, B2, B3, L1_2, L1_0
+from ase.lattice.cubic import SimpleCubic, FaceCenteredCubic, BodyCenteredCubic, Diamond #lgtm [py/unused-import]
+from ase.lattice.tetragonal import SimpleTetragonal, CenteredTetragonal #lgtm [py/unused-import]
+from ase.lattice.orthorhombic import SimpleOrthorhombic, BaseCenteredOrthorhombic, FaceCenteredOrthorhombic, BodyCenteredOrthorhombic #lgtm [py/unused-import]
+from ase.lattice.monoclinic import SimpleMonoclinic, BaseCenteredMonoclinic #lgtm [py/unused-import]
+from ase.lattice.triclinic import Triclinic #lgtm [py/unused-import]
+from ase.lattice.hexagonal import Hexagonal, HexagonalClosedPacked, Graphite #lgtm [py/unused-import]
+from ase.lattice.compounds import B1, B2, B3, L1_2, L1_0 #lgtm [py/unused-import]
 
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_ASE         import get_energies_across_lattice_constants_ASE, get_system_from_ASE
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_VASP        import get_energies_across_lattice_constants_VASP, get_system_from_VASP
@@ -110,7 +103,7 @@ class LatticeFinder_Program:
 		This method will check the variables for making output data such as plots.
 		"""
 		# Plotting variables
-		if limits == None:
+		if limits is None:
 			if isinstance(limits,dict):
 				self.limits = {lc_key: None for lc_key in self.lattice_constant_parameters.keys()}
 			else:
@@ -189,7 +182,6 @@ class LatticeFinder_Program:
 		print('===============================================================')
 		print('Loading data')
 		energies_vs_lattice_constants = {}
-		leading_data = False
 		with open(self.lattice_data_file,'r') as lattice_data_FILE:
 			for _ in range(12):
 				lattice_data_FILE.readline()
