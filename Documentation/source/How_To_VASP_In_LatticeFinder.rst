@@ -30,6 +30,11 @@ The following can also be included in ``'slurm_information'`` dictionary, but th
 * **vasp_version** (*str.*): This is the version of VASP that you would like to load in on slurm (Default: ``'VASP/5.4.4-intel-2017a'``).
 * **vasp_execution** (*str.*): This is the name of the vasp program that you execute (Default: ``'vasp_std'``).
 
+Commonly in VASP you will only need to use a (1,1,1) cell since VASP performs calculations with periodic boundary conditions. Because of this, you will be performing many small VASP calculations. As you may be performing many short VASP calculations, it is possible to break the slurm management system as slurm can get confused when its accepts many jobs at once which then finish very quickly. NeSI (support.nesi.org.nz) suggest that you should instead run packets of short VASP calculation in serial to minimise this happening. In this case, there are two additional setting to give the ``slurm_information`` dictionary:
+
+* **Make individual or packet submitSL files** (*str.*): Determines how jobs are submitted to slurm. If ``'individual'``: a slurm.sl file is created for each VASP job to run; if ``'packet'``: Several individual VASP jobs will be packaged together and run one after the other (serial) in slurm (Default: ``'individual'``).
+* **Number of VASP calculations to run per packet** (*int*): If you choose ``slurm_information['Make individual or packet submitSL files'] = 'packets'``, this is the number of individual VASP jobs that will be packaged together and run one after the other (serial) in slurm.
+
 See an example of the ``slurm_information`` parameter below:
 
 .. literalinclude:: Run_LatticeFinder_VASP.py
@@ -38,7 +43,7 @@ See an example of the ``slurm_information`` parameter below:
 	:tab-width: 4
 	:linenos:
 	:lineno-start: 10
-	:lines: 10-19
+	:lines: 10-23
 
 Make sure that you include ``'slurm_information'`` in the final line of ``Run_LatticeFinder.py`` in ``LatticeFinder_Program``. See the following code before to see this: 
 
@@ -47,8 +52,8 @@ Make sure that you include ``'slurm_information'`` in the final line of ``Run_La
 	:language: python
 	:tab-width: 4
 	:linenos:
-	:lineno-start: 27
-	:lines: 27
+	:lineno-start: 31
+	:lines: 31
 
 Notes about other parameters in LatticeFinder for performing VASP
 -----------------------------------------------------------------
