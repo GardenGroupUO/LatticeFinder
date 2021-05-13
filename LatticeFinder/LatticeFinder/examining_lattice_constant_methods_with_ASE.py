@@ -76,7 +76,6 @@ def get_system_from_ASE(lattice_type,symbol,latticeconstants,size,directions,mil
 	"""	
 	bulk_systems = []
 	for a_latticeconstants in latticeconstants:
-		import pdb; pdb.set_trace()
 		bulk_system = lattice_type(symbol=symbol, latticeconstant=a_latticeconstants, size=size)
 		bulk_system.set_calculator(calculator)
 		bulk_systems.append(bulk_system)
