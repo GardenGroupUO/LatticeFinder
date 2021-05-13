@@ -25,7 +25,7 @@ def get_lattice_type(self,lattice_type):
 	else:
 		print('Error in LatticeFinder: You have not given a valid lattice_type')
 		print('The types of lattices that are valid are:')
-		print(list(lattice_dictionary.keys())
+		print(list(lattice_dictionary.keys()))
 		print('See wiki.fysik.dtu.dk/ase/ase/lattice.html#available-crystal-lattices for more information')
 		print('This program with finish without completing')
 		exit()
