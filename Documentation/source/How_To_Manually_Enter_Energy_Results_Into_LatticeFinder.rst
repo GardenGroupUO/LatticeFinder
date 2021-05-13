@@ -4,4 +4,4 @@
 How to manually enter energy results into LatticeFinder
 =======================================================
 
-To do.
+If this is desired, add a message on github to develop this part of the code.
