@@ -37,4 +37,4 @@ dependencies:
 - scipy
 - matplotlib
 - ase=3.21.1
-- bulklatticefinder
+- latticefinder
