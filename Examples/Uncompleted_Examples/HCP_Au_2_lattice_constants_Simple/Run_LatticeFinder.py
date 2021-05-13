@@ -4,7 +4,7 @@ import numpy as np
 symbol = 'Au'
 lattice_type = 'HexagonalClosedPacked'
 
-lattice_constant_parameters = {'a': (2.8,3.0,0.001), 'c': (4.6,4.8,0.001)}
+lattice_constant_parameters = {'a': (2.0,5.0,0.1), 'c': (3.0,6.0,0.1)}
 
 from asap3.Internal.BuiltinPotentials import Gupta
 # Parameter sequence: [p, q, a, xi, r0]
