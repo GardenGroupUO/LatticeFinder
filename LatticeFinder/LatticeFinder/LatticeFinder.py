@@ -2,21 +2,13 @@ import matplotlib.pyplot as plt
 
 from LatticeFinder.LatticeFinder.lattice_constant_generator import lattice_constant_generator
 
-from ase.lattice.cubic import SimpleCubic, FaceCenteredCubic, BodyCenteredCubic, Diamond #lgtm [py/unused-import]
-from ase.lattice.tetragonal import SimpleTetragonal, CenteredTetragonal #lgtm [py/unused-import]
-from ase.lattice.orthorhombic import SimpleOrthorhombic, BaseCenteredOrthorhombic, FaceCenteredOrthorhombic, BodyCenteredOrthorhombic #lgtm [py/unused-import]
-from ase.lattice.monoclinic import SimpleMonoclinic, BaseCenteredMonoclinic #lgtm [py/unused-import]
-from ase.lattice.triclinic import Triclinic #lgtm [py/unused-import]
-from ase.lattice.hexagonal import Hexagonal, HexagonalClosedPacked, Graphite #lgtm [py/unused-import]
-from ase.lattice.compounds import B1, B2, B3, L1_2, L1_0 #lgtm [py/unused-import]
-
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_ASE         import get_energies_across_lattice_constants_ASE, get_system_from_ASE
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_VASP        import get_energies_across_lattice_constants_VASP, get_system_from_VASP
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_Manual_Mode import get_energies_across_lattice_constants_in_Manual_Mode, get_system_from_Manual_Mode
 
 from LatticeFinder.LatticeFinder.plotting_methods import plot_energy_vs_lattice_constants_1D, plot_energy_vs_lattice_constants_2D
 
-from LatticeFinder.LatticeFinder.other_methods import round_lattice_constant_parameters
+from LatticeFinder.LatticeFinder.other_methods import round_lattice_constant_parameters, get_lattice_type
 
 class LatticeFinder_Program:
 	"""
@@ -70,7 +62,7 @@ class LatticeFinder_Program:
 		# General options
 		self.symbol = symbol
 		self.lattice_type_name = str(lattice_type)
-		self.lattice_type = eval(lattice_type)
+		self.lattice_type = get_lattice_type(lattice_type)
 		self.lattice_constant_parameters = lattice_constant_parameters
 		self.calculator = calculator # This could be a string called 'VASP' or 'Manual Mode'
 		if isinstance(self.calculator,str):
