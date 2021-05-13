@@ -55,9 +55,6 @@ Make sure that you include ``'slurm_information'`` in the final line of ``Run_La
 	:lineno-start: 31
 	:lines: 31
 
-Notes about other parameters in LatticeFinder for performing VASP
------------------------------------------------------------------
-
 Other files that you will need
 ------------------------------
 
