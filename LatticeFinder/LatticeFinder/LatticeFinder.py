@@ -1,3 +1,4 @@
+import os
 import matplotlib.pyplot as plt
 
 from LatticeFinder.LatticeFinder.lattice_constant_generator import lattice_constant_generator

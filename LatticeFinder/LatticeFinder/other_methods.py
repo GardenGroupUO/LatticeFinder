@@ -17,9 +17,9 @@ def round_lattice_constant_parameters(lattice_constant_parameters):
 			new_lattice_constant_parameters.append(round(number,rounding_to))
 	return new_lattice_constant_parameters
 
-def get_lattice_type(self,lattice_type):
+def get_lattice_type(lattice_type):
 	lattice_dictionary = {'SimpleCubic': SimpleCubic, 'FaceCenteredCubic': FaceCenteredCubic, 'BodyCenteredCubic': BodyCenteredCubic, 'Diamond': Diamond, 'SimpleTetragonal': SimpleTetragonal, 'CenteredTetragonal': CenteredTetragonal, 'BaseCenteredOrthorhombic': BaseCenteredOrthorhombic, 'FaceCenteredOrthorhombic': FaceCenteredOrthorhombic, 'BodyCenteredOrthorhombic': BodyCenteredOrthorhombic, 'Triclinic': Triclinic, 'Hexagonal': Hexagonal, 'HexagonalClosedPacked': HexagonalClosedPacked, 'Graphite': Graphite, 'B1': B1, 'B2': B2, 'B3': B3, 'L1_2': L1_2, 'L1_0': L1_0}
-	for key, value in lattice_dictionary.item():
+	for key, value in lattice_dictionary.items():
 		if lattice_type == key:
 			return value
 	else:
