@@ -18,8 +18,29 @@ def round_lattice_constant_parameters(lattice_constant_parameters):
 	return new_lattice_constant_parameters
 
 def get_lattice_type(lattice_type):
-	lattice_dictionary = {'SimpleCubic': SimpleCubic, 'FaceCenteredCubic': FaceCenteredCubic, 'BodyCenteredCubic': BodyCenteredCubic, 'Diamond': Diamond, 'SimpleTetragonal': SimpleTetragonal, 'CenteredTetragonal': CenteredTetragonal, 'BaseCenteredOrthorhombic': BaseCenteredOrthorhombic, 'FaceCenteredOrthorhombic': FaceCenteredOrthorhombic, 'BodyCenteredOrthorhombic': BodyCenteredOrthorhombic, 'Triclinic': Triclinic, 'Hexagonal': Hexagonal, 'HexagonalClosedPacked': HexagonalClosedPacked, 'Graphite': Graphite, 'B1': B1, 'B2': B2, 'B3': B3, 'L1_2': L1_2, 'L1_0': L1_0}
-	for key, value in lattice_dictionary.items():
+	lattice_dictionary = {}
+	lattice_dictionary['SimpleCubic'] = SimpleCubic
+	lattice_dictionary['FaceCenteredCubic'] = FaceCenteredCubic
+	lattice_dictionary['BodyCenteredCubic'] = BodyCenteredCubic
+	lattice_dictionary['Diamond'] = Diamond
+	lattice_dictionary['SimpleTetragonal'] = SimpleTetragonal
+	lattice_dictionary['CenteredTetragonal'] = CenteredTetragonal
+	lattice_dictionary['SimpleOrthorhombic'] = SimpleOrthorhombic
+	lattice_dictionary['BaseCenteredOrthorhombic'] = BaseCenteredOrthorhombic
+	lattice_dictionary['FaceCenteredOrthorhombic'] = FaceCenteredOrthorhombic
+	lattice_dictionary['BodyCenteredOrthorhombic'] = BodyCenteredOrthorhombic
+	lattice_dictionary['SimpleMonoclinic'] = SimpleMonoclinic
+	lattice_dictionary['BaseCenteredMonoclinic'] = BaseCenteredMonoclinic
+	lattice_dictionary['Triclinic'] = Triclinic
+	lattice_dictionary['Hexagonal'] = Hexagonal
+	lattice_dictionary['HexagonalClosedPacked'] = HexagonalClosedPacked
+	lattice_dictionary['Graphite'] = Graphite
+	lattice_dictionary['B1'] = B1
+	lattice_dictionary['B2'] = B2
+	lattice_dictionary['B3'] = B3
+	lattice_dictionary['L1_2'] = L1_2
+	lattice_dictionary['L1_0'] = L1_0
+	for key, value in lattice_dictionary.items(): #  lgtm [py/redundant-else]
 		if lattice_type == key:
 			return value
 	else:

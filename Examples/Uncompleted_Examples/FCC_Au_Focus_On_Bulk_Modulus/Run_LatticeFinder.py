@@ -1,5 +1,4 @@
 from LatticeFinder import LatticeFinder_Program
-import numpy as np
 
 symbol = 'Au'
 lattice_type = 'FaceCenteredCubic'
