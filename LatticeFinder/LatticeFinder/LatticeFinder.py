@@ -15,11 +15,11 @@ class LatticeFinder_Program:
 	"""
 	This program is designed to give plots and data to help obtain the optimal lattice constants for a 2D and 3D system.
 	"""
-	def __init__(self, symbol, lattice_type, lattice_constant_parameters, calculator, size=(1,1,1), directions=None, miller=None, limits=None, no_of_cpus=1, slurm_information={}):
+	def __init__(self, symbol, lattice_type, lattice_constant_parameters, calculator, size=(1,1,1), directions=None, miller=None, limits=None, make_svg_eps_files=True, no_of_cpus=1, slurm_information={}):
 		# input options required for obtaining lattice constants
 		self.check_input_information(symbol, lattice_type, lattice_constant_parameters, calculator, size, directions, miller, slurm_information)
 		# Information about how to make plots
-		self.check_output_information(limits)
+		self.check_output_information(limits, make_svg_eps_files)
 		# Other options
 		self.no_of_cpus = no_of_cpus
 		# show initial information
@@ -91,7 +91,7 @@ class LatticeFinder_Program:
 		else:
 			self.make_packets = 'packet'
 
-	def check_output_information(self, limits):
+	def check_output_information(self, limits, make_svg_eps_files):
 		"""
 		This method will check the variables for making output data such as plots.
 		"""
@@ -116,6 +116,7 @@ class LatticeFinder_Program:
 				if value[1] is None:
 					value[1] = float('inf')
 				self.limits[key] = tuple(value)
+		self.make_svg_eps_files = make_svg_eps_files
 
 	############################################################################################################################
 
@@ -295,9 +296,9 @@ class LatticeFinder_Program:
 
 		"""
 		if len(self.lattice_constant_types) == 1:
-			plot_energy_vs_lattice_constants_1D(energies_vs_lattice_constants, self.limits, self.plotting_limits, self.minimum_energy, self.lowest_energy_lattice_constants)
+			plot_energy_vs_lattice_constants_1D(energies_vs_lattice_constants, self.limits, self.plotting_limits, self.minimum_energy, self.lowest_energy_lattice_constants, self.make_svg_eps_files)
 		if len(self.lattice_constant_types) == 2:
-			plot_energy_vs_lattice_constants_2D(energies_vs_lattice_constants, self.limits, self.plotting_limits, self.minimum_energy, self.lowest_energy_lattice_constants)
+			plot_energy_vs_lattice_constants_2D(energies_vs_lattice_constants, self.limits, self.plotting_limits, self.minimum_energy, self.lowest_energy_lattice_constants, self.make_svg_eps_files)
 
 	def get_other_data_about_system(self,minimum_energy,lowest_energy_lattice_constants,energy_vs_volumes=None):
 		"""
