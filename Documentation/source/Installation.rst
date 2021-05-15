@@ -92,7 +92,7 @@ If you do not see this, you probably do not have ``pip3`` installed on your comp
 Atomic Simulation Environment
 -----------------------------
 
-LatticeFinder uses the atomic simulation environment (ASE) to create models of crystal structures. This allows NISP to take advantage of the features of ASE, such as the wide range of calculators that can be used to calculate the energy of the cluster, and the local optimisers available to optimise offspring created during the genetic algorithm. Furthermore, ASE also offers useful tools for viewing, manipulating, reading and saving clusters and chemcial systems easily. Read more about `ASE here <https://wiki.fysik.dtu.dk/ase/>`_. For this genetic algorithm, it is recommended that you **install a version of ase that is 3.19.1 or greater**.
+LatticeFinder uses the atomic simulation environment (ASE) to create models of crystal structures. This allows NISP to take advantage of the features of ASE, such as the wide range of calculators that can be used to calculate the energy of the cluster. Furthermore, ASE also offers useful tools for viewing, manipulating, reading and saving clusters and chemcial systems easily. Read more about `ASE here <https://wiki.fysik.dtu.dk/ase/>`_. For NISP, it is recommended that you **install a version of ase that is 3.19.1 or greater**.
 
 The installation of ASE can be found on the `ASE installation page <https://wiki.fysik.dtu.dk/ase/install.html>`_, however from experience if you are using ASE for the first time, it is best to install ASE using pip, the package manager that is an extension of python to keep all your program easily managed and easy to import into your python. 
 
