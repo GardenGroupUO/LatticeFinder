@@ -9,7 +9,6 @@ lattice_type = 'HexagonalClosedPacked'
 aa_list = np.arange(2.8,3.001,0.001)
 #cc_list = np.arange(3.0,6.01,0.1)
 cc_list = np.arange(4.7,5.101,0.001)
-#import pdb; pdb.set_trace()
 lattice_constant_parameters = {'a': aa_list, 'c': cc_list}
 
 calculator = 'VASP'
@@ -34,7 +33,8 @@ directions=[]
 miller=[]
 
 limits = {'a': (2.5, 3.5), 'c': (4.0, 5.5)}
+make_svg_eps_files = False
 
 no_of_cpus=1
 
-LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus, limits=limits, slurm_information=slurm_information)
+LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus, limits=limits, make_svg_eps_files=make_svg_eps_files, slurm_information=slurm_information)

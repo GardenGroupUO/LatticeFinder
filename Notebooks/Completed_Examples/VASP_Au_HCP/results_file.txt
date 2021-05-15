@@ -1,0 +1,16 @@
+Symbol: Au
+Lattice_type: HexagonalClosedPacked
+calculator: vasp
+size: (1, 1, 1)
+directions: []
+miller: []
+Lattice Constant Parameters: ['a', 'c']
+
+Properties of System: 
+
+Total energy: -6.43982585 eV
+No. of atoms: 2 Atoms (Note the number of atoms along each natural direction of the bulk is (1, 1, 1))
+Cohesive energy: -3.219912925 eV/Atom
+
+Total Volume: 35.68804086491 Angstroms^3
+Volume per atom: 17.844020432 Angstroms^3/Atom

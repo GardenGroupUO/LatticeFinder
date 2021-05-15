@@ -1,0 +1,18 @@
+Symbol: Au
+Lattice_type: FaceCenteredCubic
+calculator: vasp
+size: (1, 1, 1)
+directions: []
+miller: []
+Lattice Constant Parameters: ['c']
+
+Properties of System: 
+
+Total energy: -12.87622179 eV
+No. of atoms: 4 Atoms (Note the number of atoms along each natural direction of the bulk is (1, 1, 1))
+Cohesive energy: -3.2190554475 eV/Atom
+
+Total Volume: 72.09517952799997 Angstroms^3
+Volume per atom: 18.023794882 Angstroms^3/Atom
+
+Bulk Modulus: 227.28293143430645 GPa

@@ -34,7 +34,8 @@ directions=[]
 miller=[]
 
 limits = {'a': (2.5, 3.5), 'c': (4.0, 5.5)}
+make_svg_eps_files = False
 
 no_of_cpus=1
 
-LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus, limits=limits, slurm_information=slurm_information)
+LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus, limits=limits, make_svg_eps_files=make_svg_eps_files, slurm_information=slurm_information)
