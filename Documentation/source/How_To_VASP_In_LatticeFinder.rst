@@ -64,7 +64,8 @@ You will also need to give LatticeFinder some other files that are needed by VAS
 * ``KPOINTS``: This contain the information used to specify the Bloch vectors (k-points) that will be used to sample the Brillouin zone in your calculation.
 * ``INCAR``: This contains all the setting that are required by VASP to perform calculations. **Note that in the INCAR you must set** ``NSW = 0``. This prevents VASP from performing a local optimisation which you do not need to do in this program.
 
-These files will be copied by LatticeFinder into each nanocluster folder. See :ref:`Examples of Running LatticeFinder with Run_LatticeFinder.py <Examples_of_Running_LatticeFinder>` and `LatticeFinder examples here <https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples>`_ to see the types of plots and text documents that LatticeFinder will make. 
+These files will be copied by LatticeFinder into each nanocluster folder. See `an example of a setup of LatticeFinder for VASP here <https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples/Uncompleted_Examples/VASP_Au_FCC_Full>`_. 
+
 
 What to do after you have run LatticeFinder
 -------------------------------------------
@@ -72,3 +73,9 @@ What to do after you have run LatticeFinder
 After you run LatticeFinder, this will create a new folder called ``VASP_Systems``, which contains subfolders of your system at all the lattice constants that you want to examine. Each subfolder will contain a ``POSCAR``, ``INCAR``, ``POTCAR``, ``KPOINTS``, and ``submit.sl`` that are needed by VASP to perform DFT calculations. Each system is ready to be calculated by VASP. 
 
 You will find that there are many systems are created by LatticeFinder. To submit all of these system to slurm to calculate energies for by VASP, you can execute the program called ``Run_LatticeFinder_submitSL_slurm.py`` which will execute all of DFT VASP jobs in slurm. To run this script, type ``Run_submitSL_slurm.py`` into the terminal inside of your newly created ``VASP_Systems`` folder. 
+
+
+Output files that are created by LatticeFinder
+**********************************************
+
+The LatticeFinder program will create a number of plots and text documents when it is run. See :ref:`Examples of Running LatticeFinder with Run_LatticeFinder.py <Examples_of_Running_LatticeFinder>` and `LatticeFinder examples here <https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples>`_ to see the types of plots and text documents that LatticeFinder will make. 
