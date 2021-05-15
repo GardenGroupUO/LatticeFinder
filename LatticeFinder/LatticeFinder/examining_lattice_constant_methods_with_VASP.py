@@ -149,7 +149,7 @@ def check_VASP_files(vasp_files_folder):
 		print('Check this out. This program will now end without completing.')
 		exit()
 
-def copy_VASP_files(root,vasp_files_folder,slurm_information,packet_submit_sl_file):
+def copy_VASP_files(root,vasp_files_folder,slurm_information,make_packets):
 	check_INCAR_Further(vasp_files_folder)
 	print('Copying VASP files to '+root)
 	for file in ['POTCAR', 'INCAR', 'KPOINTS']:
@@ -191,7 +191,11 @@ def check_INCAR_Further(vasp_files_folder):
 		for line in INCAR:
 			if 'NSW' in line:
 				line = line.rstrip().lstrip()
-				exec(line)
+				number = line.replace('NSW', '').replace('=', '')
+				print(line)
+				#exec(line)
+				NSW = int(number)
+				#import pdb; pdb.set_trace()
 				if NSW == 0:
 					break
 				else:
