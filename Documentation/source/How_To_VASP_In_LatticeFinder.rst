@@ -64,8 +64,7 @@ You will also need to give LatticeFinder some other files that are needed by VAS
 * ``KPOINTS``: This contain the information used to specify the Bloch vectors (k-points) that will be used to sample the Brillouin zone in your calculation.
 * ``INCAR``: This contains all the setting that are required by VASP to perform calculations. **Note that in the INCAR you must set** ``NSW = 0``. This prevents VASP from performing a local optimisation which you do not need to do in this program.
 
-These files will be copied by LatticeFinder into each nanocluster folder. See `an example of a setup of LatticeFinder for VASP here <https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples/VASP>`_. 
-
+These files will be copied by LatticeFinder into each nanocluster folder. See :ref:`Examples of Running LatticeFinder with Run_LatticeFinder.py <Examples_of_Running_LatticeFinder>` and `LatticeFinder examples here <https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples>`_ to see the types of plots and text documents that LatticeFinder will make. 
 
 What to do after you have run LatticeFinder
 -------------------------------------------

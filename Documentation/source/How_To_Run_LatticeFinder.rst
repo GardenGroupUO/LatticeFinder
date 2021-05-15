@@ -75,4 +75,4 @@ You have got to the end of all the parameter setting stuff. Now on to running NI
 Output files that are created by LatticeFinder
 **********************************************
 
-The LatticeFinder program will create a number of plots and text documents when it is run. See :ref:`Examples of Running LatticeFinder with Run_LatticeFinder.py <Examples_of_Running_LatticeFinder>` to see the types of plots and text documents that LatticeFinder will make. 
+The LatticeFinder program will create a number of plots and text documents when it is run. See :ref:`Examples of Running LatticeFinder with Run_LatticeFinder.py <Examples_of_Running_LatticeFinder>` and `LatticeFinder examples here <https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples>`_ to see the types of plots and text documents that LatticeFinder will make. 
