@@ -8,7 +8,7 @@ Examples of Running LatticeFinder with *Run_LatticeFinder.py*
    :target: https://mybinder.org/v2/gh/GardenGroupUO/LatticeFinder/main?urlpath=lab
    :alt: Binder
 
-Provided in the LatticeFinder Github repository are examples of *Run_LatticeFinder.py*. Find these various examples at https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples. These examples with their accompanying results are also given in https://github.com/GardenGroupUO/LatticeFinder_Examples/tree/main/Examples
+Provided in the LatticeFinder Github repository are examples of *Run_LatticeFinder.py*. Find these various examples at https://github.com/GardenGroupUO/LatticeFinder/tree/main/Examples.
 
 We have also developed a Jupyter notebook with some examples of various *Run_LatticeFinder.py* that you can play with and muck around with. The Github repository for this Jupyter notebook can also be found at https://github.com/GardenGroupUO/LatticeFinder. 
 
