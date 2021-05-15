@@ -52,8 +52,8 @@ Make sure that you include ``'slurm_information'`` in the final line of ``Run_La
 	:language: python
 	:tab-width: 4
 	:linenos:
-	:lineno-start: 31
-	:lines: 31
+	:lineno-start: 35
+	:lines: 35
 
 Other files that you will need
 ------------------------------

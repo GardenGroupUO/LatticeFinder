@@ -13,11 +13,14 @@ Au_parameters = {'Au': [10.53, 4.30, 0.2197, 1.855, r0]} # Baletto
 cutoff = 8
 calculator = Gupta(Au_parameters, cutoff=cutoff, debug=False)
 
-size=(16,16,16)
+size = (16,16,16)
 
-directions=[]
-miller=[]
+directions = []
+miller = []
 
-no_of_cpus=1
+limit = None
+make_svg_eps_files = False
 
-LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus)
+no_of_cpus = 1
+
+LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, limit=limit, make_svg_eps_files=make_svg_eps_files, no_of_cpus=no_of_cpus, slurm_information=slurm_information)

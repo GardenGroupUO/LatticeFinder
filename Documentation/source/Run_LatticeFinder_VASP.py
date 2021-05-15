@@ -24,8 +24,12 @@ slurm_information['Number of VASP calculations to run per packet'] = 25
 
 size=(1,1,1)
 
-directions=[]
-miller=[]
-no_of_cpus=1
+directions = []
+miller = []
 
-LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, no_of_cpus=no_of_cpus, slurm_information=slurm_information)
+limit = None
+make_svg_eps_files = False
+
+no_of_cpus = 1
+
+LatticeFinder_Program(symbol, lattice_type, lattice_constant_parameters, calculator, size=size, directions=directions, miller=miller, limit=limit, make_svg_eps_files=make_svg_eps_files, no_of_cpus=no_of_cpus, slurm_information=slurm_information)

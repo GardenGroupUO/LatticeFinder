@@ -39,7 +39,15 @@ The following information is required by LatticeFinder:
 
 * **size** (*list of ints*): This is the size of the system within a cell. See `Usage in Lattices <https://wiki.fysik.dtu.dk/ase/ase/lattice.html#usage>`_ for more infotmation about the size parameter. 
 * **directions** (*list of ints*): Still figuring this out. See `Usage in Lattices <https://wiki.fysik.dtu.dk/ase/ase/lattice.html#usage>`_ for more infotmation about the directions parameter. 
-* **miller** (*list of ints*): Still figuring this out. See `Usage in Lattices <https://wiki.fysik.dtu.dk/ase/ase/lattice.html#usage>`_ for more infotmation about the miller parameter. 
+* **miller** (*list of ints*): Still figuring this out. See `Usage in Lattices <https://wiki.fysik.dtu.dk/ase/ase/lattice.html#usage>`_ for more infotmation about the miller parameter.
+
+Parameters required by LatticeFinder for plotting plots:
+
+* **limit** (*dict.*): This is the limits for plotting your lattice constant plots. For a lattice system with one lattice constant: give as ``{'c': (c_lower_limit, c_upper_limit)}``. For a lattice system with two lattice constant: give as ``{'c': (c_lower_limit, c_upper_limit), 'a': (a_lower_limit, a_upper_limit)}``. If no change to the plotting limits are needed, set this to ``None``. Default: ``None``. 
+* **make_svg_eps_files** (*bool*): This tag tells LatticeFinder if you want to create svg and eps files of the plots made. Default: ``True``. 
+
+Other parameters required by LatticeFinder:
+
 * **no_of_cpus** (*int*): This is the number of cpus that you would like to use to perform calculations of 2D/3D system of various lattice constants. 
 
 An example of these parameters in ``Run_LatticeFinder.py`` is given below:
@@ -48,8 +56,8 @@ An example of these parameters in ``Run_LatticeFinder.py`` is given below:
 	:language: python
 	:tab-width: 4
 	:linenos:
-	:lineno-start: 4
-	:lines: 4-21
+	:lineno-start: 1
+	:lines: 1-24
 
 
 Run LatticeFinder!
@@ -61,8 +69,8 @@ You have got to the end of all the parameter setting stuff. Now on to running NI
 	:language: python
 	:tab-width: 4
 	:linenos:
-	:lineno-start: 23
-	:lines: 23
+	:lineno-start: 26
+	:lines: 26
 
 Output files that are created by LatticeFinder
 **********************************************
