@@ -40,7 +40,7 @@ def get_lattice_type(lattice_type):
 	lattice_dictionary['B3'] = B3
 	lattice_dictionary['L1_2'] = L1_2
 	lattice_dictionary['L1_0'] = L1_0
-	for key, value in lattice_dictionary.items(): #  lgtm [py/redundant-else]
+	for key, value in lattice_dictionary.items(): # lgtm [py/redundant-else]
 		if lattice_type == key:
 			return value
 	else:
