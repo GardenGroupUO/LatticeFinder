@@ -5,6 +5,20 @@ from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_Manual_
 from LatticeFinder.LatticeFinder.Create_submitSL_slurm_Main import make_submitSL, make_submitSL_packets_for_latticeFinder
 from LatticeFinder.LatticeFinder.examining_lattice_constant_methods_with_ASE import save_datum_to_file, get_volume_per_atom
 
+def get_system_from_VASP(latticeconstants,folder_name):
+	"""
+
+	"""
+	systems = []
+	for a_latticeconstants in latticeconstants:
+		if isinstance(a_latticeconstants,dict):
+			name = '_'.join([str(key)+'_'+str(value) for key, value in a_latticeconstants.items()])
+		else:
+			name = 'c_'+str(a_latticeconstants)
+		system = read(folder_name+'/'+name+'/OUTCAR')
+		systems.append(system)
+	return systems
+
 def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_constant_generator,size,directions=None,miller=None,lattice_data_file=None,vasp_inputs='VASP_Files',folder_name='VASP_Clusters',slurm_information={},force_rewrite=False,lattice_type_name=None,make_packets='packet',energies_vs_lattice_constants={}):
 	"""
 
@@ -28,11 +42,12 @@ def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_const
 		lattice_constant_generator.reset()
 		lattice_constants_to_get_data_on = [item for item in all_lattice_constants_to_make if item not in lattice_constants_wiih_obtained_energies]
 		lc_data_files_to_make = compare_lc_with_ls_files_on_disk(lattice_constants_to_get_data_on,folder_name)
+		import pdb; pdb.set_trace()
 		if len(lc_data_files_to_make) > 0:
 			print('Not getting data, instead making clusters for running in VASP.')
 			make_VASP_folders(lattice_type,symbol,lc_data_files_to_make,size,directions,miller,vasp_inputs,folder_name,slurm_information,make_packets)
 			exit()
-	slurm_information = get_VASP_energies(lattice_constant_generator,lattice_data_file,folder_name,lattice_type_name)
+	slurm_information = get_VASP_energies(lattice_constant_generator,lattice_data_file,folder_name,lattice_type_name,energies_vs_lattice_constants=energies_vs_lattice_constants)
 	return slurm_information
 
 def compare_lc_with_ls_files_on_disk(lattice_constants_to_get_data_on,folder_name):
@@ -175,11 +190,11 @@ def get_folder_name(latticeconstants):
 		name = 'c_'+str(latticeconstants)
 	return name
 
-def get_VASP_energies(lattice_constant_generator,lattice_data_file=None,folder_name='VASP_Clusters',lattice_type_name=None):
+def get_VASP_energies(lattice_constant_generator,lattice_data_file=None,folder_name='VASP_Clusters',lattice_type_name=None,energies_vs_lattice_constants={}):
 	"""
 
 	"""
-	check_lattice_data_file(lattice_data_file)
+	#check_lattice_data_file(lattice_data_file,energies_vs_lattice_constants=energies_vs_lattice_constants)
 	slurm_information = {}
 	clusters_not_calculated = []
 	lattice_constant_generator.reset()
@@ -213,7 +228,7 @@ def get_VASP_energies(lattice_constant_generator,lattice_data_file=None,folder_n
 	lattice_constant_generator.reset()
 	return slurm_information
 
-def check_lattice_data_file(lattice_data_file):
+def check_lattice_data_file(lattice_data_file,energies_vs_lattice_constants={}):
 	"""
 
 	"""

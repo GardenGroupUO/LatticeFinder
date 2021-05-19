@@ -40,16 +40,16 @@ where ``<Path_to_LatticeFinder>"`` is the path to get to the genetic algorithm p
 See more about this in :ref:`Installation of LatticeFinder <Installation>`. 
 
 
-``Run_LatticeFinder_submitSL_slurm.py`` - How to execute all Trials using the Slurm Job Submission Scheme
-*********************************************************************************************************
+``Run_LatticeFinder_submitSL_slurm.py`` - How to execute all VASP jobs individually as single jobs on slurm for lattice constant calculations
+*********************************************************************************************************************************************
 
 
 
-``Run_overall_LatticeFinder_submitSL_slurm.py`` - How to execute all Trials using the JobArray Slurm Job Submission Scheme
-**************************************************************************************************************************
+``Run_overall_LatticeFinder_submitSL_slurm.py`` - How to execute all your VASP jobs that have been collected together as packets for submission to slurm
+********************************************************************************************************************************************************
 
 
 
-``LatticeFinder_Tidy_Finished_Jobs.py`` - How to execute all Trials using the JobArray Slurm Job Submission Scheme
+``LatticeFinder_Tidy_Finished_Jobs.py`` - How to ...
 ******************************************************************************************************************
 

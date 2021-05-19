@@ -39,8 +39,9 @@ def make_submitSL(local_path,project,time,nodes,ntasks_per_node,mem_per_cpu,part
         submitSL.write('module load '+str(python_version)+'\n')
         submitSL.write('Check_LatticeFinder_to_Tidy_after_Job.py')
 
-def make_submitSL_packets_for_latticeFinder(number_of_vasp_calc_to_run_per_packet,directories,local_path,project,newlist,time,nodes,ntasks_per_node,mem_per_cpu,partition='large',email='',python_version='Python/3.6.3-gimkl-2017a',vasp_version='VASP/5.4.4-intel-2017a',vasp_execution='vasp_std'):
+def make_submitSL_packets_for_latticeFinder(number_of_vasp_calc_to_run_per_packet,directories,local_path,project,time,nodes,ntasks_per_node,mem_per_cpu,partition='large',email='',python_version='Python/3.6.3-gimkl-2017a',vasp_version='VASP/5.4.4-intel-2017a',vasp_execution='vasp_std'):
     mass_submit_counter = 1
+    nn = number_of_vasp_calc_to_run_per_packet
     while len(directories) > 0:
         if len(directories) > nn:
             newlist = directories[:nn]
