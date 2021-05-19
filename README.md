@@ -9,6 +9,8 @@
 [![Licence](https://img.shields.io/github/license/GardenGroupUO/LatticeFinder)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/python/github/GardenGroupUO/LatticeFinder)](https://lgtm.com/projects/g/GardenGroupUO/LatticeFinder/context:python)
 
+CURRENTLY UNDER RECONSTRUCTION: SOME FEATURES MAY NOT CURRENTLY BE WORKING
+
 Authors: Geoffrey R. Weal and Dr. Anna L. Garden (University of Otago, Dunedin, New Zealand)
 
 Group page: https://blogs.otago.ac.nz/annagarden/

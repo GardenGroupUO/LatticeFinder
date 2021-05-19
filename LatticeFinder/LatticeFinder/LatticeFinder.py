@@ -225,11 +225,11 @@ class LatticeFinder_Program:
 		print('===============================================================')
 		print('Getting data')
 		if self.calculator == 'vasp':
-			energies_vs_lattice_constants = get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,directions=self.directions,miller=self.miller,lattice_data_file=self.lattice_data_file,vasp_inputs=self.VASP_Input_files,folder_name=self.VASP_Systems_Folder,slurm_information=self.slurm_information,force_rewrite=False,lattice_type_name=self.lattice_type_name,make_packets=self.make_packets)
+			energies_vs_lattice_constants = get_energies_across_lattice_constants_VASP(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,directions=self.directions,miller=self.miller,lattice_data_file=self.lattice_data_file,vasp_inputs=self.VASP_Input_files,folder_name=self.VASP_Systems_Folder,slurm_information=self.slurm_information,force_rewrite=False,lattice_type_name=self.lattice_type_name,make_packets=self.make_packets,energies_vs_lattice_constants=energies_vs_lattice_constants)
 		elif self.calculator == 'manual mode':
-			energies_vs_lattice_constants = get_energies_across_lattice_constants_in_Manual_Mode(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,self.miller,self.Manual_Mode_Cluster_Folder)
+			energies_vs_lattice_constants = get_energies_across_lattice_constants_in_Manual_Mode(self.lattice_type,self.symbol,self.lattice_constant_generator,self.size,self.directions,self.miller,self.Manual_Mode_Cluster_Folder,energies_vs_lattice_constants=energies_vs_lattice_constants)
 		else:
-			energies_vs_lattice_constants = get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants)
+			energies_vs_lattice_constants = get_energies_across_lattice_constants_ASE(self.lattice_type,self.symbol,self.lattice_constant_generator,self.lattice_constant_types,self.size,self.directions,self.miller,self.calculator,self.no_of_cpus,self.lattice_data_file,energies_vs_lattice_constants=energies_vs_lattice_constants)
 		print('Finished getting data')
 		print('===============================================================')
 		return energies_vs_lattice_constants

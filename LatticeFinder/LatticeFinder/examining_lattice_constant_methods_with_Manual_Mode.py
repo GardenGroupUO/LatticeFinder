@@ -1,7 +1,7 @@
 import os
 from ase.io import write
 
-def get_energies_across_lattice_constants_in_Manual_Mode(lattice_type,symbol,lattice_constant_generator,size,directions=None,miller=None,folder_name='Manual_Mode_Clusters'):
+def get_energies_across_lattice_constants_in_Manual_Mode(lattice_type,symbol,lattice_constant_generator,size,directions=None,miller=None,folder_name='Manual_Mode_Clusters',energies_vs_lattice_constants={}):
 	"""
 
 	"""
