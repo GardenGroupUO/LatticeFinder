@@ -28,7 +28,7 @@ def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_const
 		print('=============================================================================')
 		print('PERFORMING FORCE REWRITE OF VASP FILES')
 		print()
-		print('Not getting data, instead making clusters for running in VASP.')
+		print('NOT GETTING DATA, instead making clusters for running in VASP.')
 		print('=============================================================================')
 		make_VASP_folders(lattice_type,symbol,lattice_constants_wiih_obtained_energies,size,directions,miller,vasp_inputs,folder_name,slurm_information,make_packets)
 		print('=============================================================================')
@@ -39,12 +39,17 @@ def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_const
 	else:
 		lattice_constant_generator.reset()
 		all_lattice_constants_to_make = list(lattice_constant_generator)
+		if isinstance(all_lattice_constants_to_make[0],dict):
+			for index in range(len(all_lattice_constants_to_make)):
+				a_lattice_constant_to_make = all_lattice_constants_to_make[index]
+				a_lattice_constant_to_make = sorted(a_lattice_constant_to_make.items(),key= lambda x:x[0])
+				a_lattice_constant_to_make = tuple(value for key, value in a_lattice_constant_to_make)
+				all_lattice_constants_to_make[index] = a_lattice_constant_to_make
 		lattice_constant_generator.reset()
 		lattice_constants_to_get_data_on = [item for item in all_lattice_constants_to_make if item not in lattice_constants_wiih_obtained_energies]
 		lc_data_files_to_make = compare_lc_with_ls_files_on_disk(lattice_constants_to_get_data_on,folder_name)
-		import pdb; pdb.set_trace()
 		if len(lc_data_files_to_make) > 0:
-			print('Not getting data, instead making clusters for running in VASP.')
+			print('NOT GETTING DATA, instead making clusters for running in VASP.')
 			make_VASP_folders(lattice_type,symbol,lc_data_files_to_make,size,directions,miller,vasp_inputs,folder_name,slurm_information,make_packets)
 			exit()
 	slurm_information = get_VASP_energies(lattice_constant_generator,lattice_data_file,folder_name,lattice_type_name,energies_vs_lattice_constants=energies_vs_lattice_constants)

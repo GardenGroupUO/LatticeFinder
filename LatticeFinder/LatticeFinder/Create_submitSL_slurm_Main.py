@@ -94,7 +94,7 @@ def make_submitSL_packets_for_latticeFinder_subsidiary_method(mass_submit_counte
         submitSL.write('    cd "$directory"\n')
         submitSL.write('    srun -K '+str(vasp_execution)+'\n')
         submitSL.write('    # removing files except for OUTCAR as we assume it finished successfully\n')
-        submitSL.write('    LatticeFinder_Tidy_after_Job.py\n')
+        submitSL.write('    LatticeFinder_Tidy_Finished_Jobs.py\n')
         submitSL.write('    cd ..\n')
         submitSL.write('    echo "======================================"\n')
         submitSL.write('done\n')
