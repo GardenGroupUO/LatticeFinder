@@ -11,26 +11,35 @@ def get_system_from_VASP(latticeconstants,folder_name):
 	"""
 	systems = []
 	for a_latticeconstants in latticeconstants:
-		if isinstance(a_latticeconstants,dict):
-			name = '_'.join([str(key)+'_'+str(value) for key, value in a_latticeconstants.items()])
-		else:
-			name = 'c_'+str(a_latticeconstants)
+		name = get_folder_name(a_latticeconstants)
 		system = read(folder_name+'/'+name+'/OUTCAR')
 		systems.append(system)
 	return systems
+
+def get_folder_name(latticeconstants):
+	"""
+
+	"""
+	if isinstance(latticeconstants,dict):
+		name = '_'.join([str(key)+'_'+str(value) for key, value in latticeconstants.items()])
+	elif isinstance(latticeconstants,tuple) or isinstance(latticeconstants,list):
+		raise Exception('Error: latticeconstants can not be a tuple or list.')
+	else:
+		name = 'c_'+str(latticeconstants)
+	return name
 
 def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_constant_generator,size,directions=None,miller=None,lattice_data_file=None,vasp_inputs='VASP_Files',folder_name='VASP_Clusters',slurm_information={},force_rewrite=False,lattice_type_name=None,make_packets='packet',energies_vs_lattice_constants={}):
 	"""
 
 	"""
-	lattice_constants_wiih_obtained_energies = energies_vs_lattice_constants.keys()
+	lattice_constants_with_obtained_energies = energies_vs_lattice_constants.keys()
 	if force_rewrite:
 		print('=============================================================================')
 		print('PERFORMING FORCE REWRITE OF VASP FILES')
 		print()
 		print('NOT GETTING DATA, instead making clusters for running in VASP.')
 		print('=============================================================================')
-		make_VASP_folders(lattice_type,symbol,lattice_constants_wiih_obtained_energies,size,directions,miller,vasp_inputs,folder_name,slurm_information,make_packets)
+		make_VASP_folders(lattice_type,symbol,lattice_constants_with_obtained_energies,size,directions,miller,vasp_inputs,folder_name,slurm_information,make_packets)
 		print('=============================================================================')
 		print('All VASP files have been rewritten. You will need to turn the "force_rewrite" option to False now that this has been done, otherwise this program will only continue to rewrite your VASP files.')
 		print('This program will not finish without completing.')
@@ -46,7 +55,9 @@ def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_const
 				a_lattice_constant_to_make = tuple(value for key, value in a_lattice_constant_to_make)
 				all_lattice_constants_to_make[index] = a_lattice_constant_to_make
 		lattice_constant_generator.reset()
-		lattice_constants_to_get_data_on = [item for item in all_lattice_constants_to_make if item not in lattice_constants_wiih_obtained_energies]
+		lattice_constants_to_get_data_on = [item for item in all_lattice_constants_to_make if item not in lattice_constants_with_obtained_energies]
+		lattice_constants_to_get_data_on = [{key: value for key, value in zip(lattice_constant_generator.lattice_constant_types,item)} for item in all_lattice_constants_to_make]
+		#import pdb; pdb.set_trace()
 		lc_data_files_to_make = compare_lc_with_ls_files_on_disk(lattice_constants_to_get_data_on,folder_name)
 		if len(lc_data_files_to_make) > 0:
 			print('NOT GETTING DATA, instead making clusters for running in VASP.')
@@ -87,6 +98,8 @@ def make_VASP_folders(lattice_type,symbol,lc_data_files_to_make,size,directions=
 			all_directories.append(name)
 	if make_packets == 'packets':
 		make_packet_submitSL_files(folder_name,all_directories,slurm_information)
+	else:
+		make_individual_submitSL_files(folder_name,slurm_information)
 
 def check_VASP_files(vasp_files_folder):
 	"""
@@ -122,18 +135,7 @@ def copy_VASP_files(root,vasp_files_folder,slurm_information,make_packets):
 	print('Copying VASP files to '+root)
 	for file in ['POTCAR', 'INCAR', 'KPOINTS']:
 		copyfile(vasp_files_folder+'/'+file, root+'/'+file)
-	if make_packets == 'packets':
-		project = slurm_information['project']
-		time = slurm_information['time']
-		nodes = slurm_information['nodes']
-		ntasks_per_node = slurm_information['ntasks_per_node']
-		mem_per_cpu = slurm_information['mem-per-cpu']
-		partition = slurm_information['partition']
-		email = slurm_information['email']
-		python_version = slurm_information['python_version']
-		vasp_version = slurm_information['vasp_version']
-		vasp_execution = slurm_information['vasp_execution']
-		make_submitSL(root,project,time,nodes,ntasks_per_node,mem_per_cpu,partition=partition,email=email,python_version=python_version,vasp_version=vasp_version,vasp_execution=vasp_execution)
+
 
 def check_INCAR_Further(vasp_files_folder):
 	"""
@@ -185,15 +187,21 @@ def make_packet_submitSL_files(root,all_directories,slurm_information):
 	number_of_vasp_calc_to_run_per_packet = slurm_information['Number of VASP calculations to run per packet']
 	make_submitSL_packets_for_latticeFinder(number_of_vasp_calc_to_run_per_packet,all_directories,root,project,time,nodes,ntasks_per_node,mem_per_cpu,partition=partition,email=email,python_version=python_version,vasp_version=vasp_version,vasp_execution=vasp_execution)
 
-def get_folder_name(latticeconstants):
+def make_individual_submitSL_files(root,slurm_information):
 	"""
 
 	"""
-	if isinstance(latticeconstants,dict):
-		name = '_'.join([str(key)+'_'+str(value) for key, value in latticeconstants.items()])
-	else:
-		name = 'c_'+str(latticeconstants)
-	return name
+	project = slurm_information['project']
+	time = slurm_information['time']
+	nodes = slurm_information['nodes']
+	ntasks_per_node = slurm_information['ntasks_per_node']
+	mem_per_cpu = slurm_information['mem-per-cpu']
+	partition = slurm_information['partition']
+	email = slurm_information['email']
+	python_version = slurm_information['python_version']
+	vasp_version = slurm_information['vasp_version']
+	vasp_execution = slurm_information['vasp_execution']
+	make_submitSL(root,project,time,nodes,ntasks_per_node,mem_per_cpu,partition=partition,email=email,python_version=python_version,vasp_version=vasp_version,vasp_execution=vasp_execution)
 
 def get_VASP_energies(lattice_constant_generator,lattice_data_file=None,folder_name='VASP_Clusters',lattice_type_name=None,energies_vs_lattice_constants={}):
 	"""
