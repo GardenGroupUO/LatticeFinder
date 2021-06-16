@@ -133,7 +133,7 @@ class LatticeFinder_Program:
 		energies_vs_lattice_constants = self.setup_energies_vs_lattice_constants()
 		# Process the range of lattice constants and determine the minimum energy and lattice constant, as well as the projected lattice constant
 		energies_vs_lattice_constants = self.get_data(energies_vs_lattice_constants)
-		self.sort_data_file()
+		self.sort_data_file(energies_vs_lattice_constants)
 		energies_vs_lattice_constants, energy_vs_volumes = self.divide_up_energies_and_volumes(energies_vs_lattice_constants)
 		self.minimum_energy, self.lowest_energy_lattice_constants = self.get_minimum_energy(energies_vs_lattice_constants)
 		# Plot the data and give other information about the system
@@ -234,11 +234,13 @@ class LatticeFinder_Program:
 		print('===============================================================')
 		return energies_vs_lattice_constants
 
-	def sort_data_file(self):
+	def sort_data_file(self, energies_vs_lattice_constants):
 		"""
 		If you are using multiple processes, the ordering or lattice constants in the lattice_data.txt can become muddled up
 		# This method reorders lines
 		"""
+		print('===============================================================')
+		print('Sorting data in the data file')
 		new_suffix = '.new'
 		with open(self.lattice_data_file+new_suffix,'w') as lattice_data_FILE_NEW:
 			lines = []
@@ -248,9 +250,14 @@ class LatticeFinder_Program:
 				for line in lattice_data_FILE_OLD:
 					lattice_constants = eval(line.rstrip().split(':')[0])
 					lines.append((lattice_constants,line))
-			lines.sort()
-			for lattice_constants, line in lines:
-				lattice_data_FILE_NEW.write(line)
+			import pdb; pdb.set_trace()
+			energies_vs_lattice_constants_sorted = sorted(energies_vs_lattice_constants.items())
+			if isinstance(self.lattice_constant_types,list) or isinstance(self.lattice_constant_types,tuple):
+				for lattice_constants, energy in energies_vs_lattice_constants_sorted:
+					lattice_data_FILE_NEW.write(str(lattice_constants)+': '+str(energy))
+			else:
+				for lattice_constants, (energy, volume) in energies_vs_lattice_constants_sorted:
+					lattice_data_FILE_NEW.write(str(lattice_constants)+': '+str(energy)+' ('+str(volume)+')')
 		os.remove(self.lattice_data_file)
 		os.rename(self.lattice_data_file+new_suffix,self.lattice_data_file)
 

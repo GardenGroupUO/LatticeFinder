@@ -40,9 +40,8 @@ Welcome to the LatticeFinder documentation!
    :target: https://lgtm.com/projects/g/GardenGroupUO/LatticeFinder/context:python
    :alt: LGTM Grade
 
-
-.. sectionauthor:: Dr. Anna Garden <anna.garden@otago.ac.nz>
 .. sectionauthor:: Geoffrey Weal <geoffrey.weal@gmail.com>
+.. sectionauthor:: Dr. Anna Garden <anna.garden@otago.ac.nz>
 
 Group page: https://blogs.otago.ac.nz/annagarden/
 

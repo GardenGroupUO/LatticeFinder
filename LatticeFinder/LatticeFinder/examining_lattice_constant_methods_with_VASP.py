@@ -54,11 +54,16 @@ def get_energies_across_lattice_constants_VASP(lattice_type,symbol,lattice_const
 				a_lattice_constant_to_make = sorted(a_lattice_constant_to_make.items(),key= lambda x:x[0])
 				a_lattice_constant_to_make = tuple(value for key, value in a_lattice_constant_to_make)
 				all_lattice_constants_to_make[index] = a_lattice_constant_to_make
-		lattice_constant_generator.reset()
-		lattice_constants_to_get_data_on = [item for item in all_lattice_constants_to_make if item not in lattice_constants_with_obtained_energies]
-		lattice_constants_to_get_data_on = [{key: value for key, value in zip(lattice_constant_generator.lattice_constant_types,item)} for item in all_lattice_constants_to_make]
-		#import pdb; pdb.set_trace()
-		lc_data_files_to_make = compare_lc_with_ls_files_on_disk(lattice_constants_to_get_data_on,folder_name)
+			lattice_constant_generator.reset()
+			lattice_constants_to_get_data_on = [item for item in all_lattice_constants_to_make if item not in lattice_constants_with_obtained_energies]
+			#if not isinstance(all_lattice_constants_to_make[0],dict):
+			#	for index in range(len(all_lattice_constants_to_make)):
+			#		all_lattice_constants_to_make[index] = [all_lattice_constants_to_make[index]]
+			lattice_constants_to_get_data_on = [{key: value for key, value in zip(lattice_constant_generator.lattice_constant_types,item)} for item in all_lattice_constants_to_make]
+			#lattice_constants_to_get_data_on = [{key: value for key, value in zip(lattice_constant_generator.lattice_constant_types,item)} for item in all_lattice_constants_to_make]
+			lc_data_files_to_make = compare_lc_with_ls_files_on_disk(lattice_constants_to_get_data_on,folder_name)
+		else:
+			lc_data_files_to_make = compare_lc_with_ls_files_on_disk(all_lattice_constants_to_make,folder_name)
 		if len(lc_data_files_to_make) > 0:
 			print('NOT GETTING DATA, instead making clusters for running in VASP.')
 			make_VASP_folders(lattice_type,symbol,lc_data_files_to_make,size,directions,miller,vasp_inputs,folder_name,slurm_information,make_packets)
