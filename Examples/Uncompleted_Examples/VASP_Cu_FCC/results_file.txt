@@ -1,0 +1,18 @@
+Symbol: Cu
+Lattice_type: FaceCenteredCubic
+calculator: vasp
+size: (1, 1, 1)
+directions: []
+miller: []
+Lattice Constant Parameters: ['c']
+
+Properties of System: 
+
+Total energy: -14.92691199 eV
+No. of atoms: 4 Atoms (Note the number of atoms along each natural direction of the bulk is (1, 1, 1))
+Cohesive energy: -3.7317279975 eV/Atom
+
+Total Volume: 47.871688591 Angstroms^3
+Volume per atom: 11.967922148 Angstroms^3/Atom
+
+Bulk Modulus: 197.86360370188328 GPa
