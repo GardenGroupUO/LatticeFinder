@@ -48,7 +48,7 @@ setup(name='LatticeFinder',
       description="This program is designed to give the lattice constants for a 3D crystal lattice or a 2D system, such as graphene (in development).",
       long_description=get_long_description(),
       long_description_content_type='text/markdown',
-      author='Geoffrey R. Weal and Dr. Anna L. Garden',
+      author='Dr. Geoffrey R. Weal and Dr. Anna L. Garden',
       author_email='anna.garden@otago.ac.nz',
       url = 'https://blogs.otago.ac.nz/annagarden/',
       download_url = 'https://github.com/GardenGroupUO/LatticeFinder/archive/v'+str(get_version_number())+'.tar.gz',
@@ -56,7 +56,7 @@ setup(name='LatticeFinder',
       zip_safe=False,
       keywords = ['lattice', 'lattice_constant', 'ase', 'university-of-otago', 'asap3', 'atomic-simulation-environment', 'jupyter-binder', 'otago-university'],
       install_requires=[
-          'numpy','scipy','matplotlib','ase>=3.19.0'
+          'numpy','scipy','matplotlib','ase>=3.19.0','packaging'
           ],
       classifiers=[
         'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package

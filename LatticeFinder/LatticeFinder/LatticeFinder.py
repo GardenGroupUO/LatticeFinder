@@ -250,14 +250,14 @@ class LatticeFinder_Program:
 				for line in lattice_data_FILE_OLD:
 					lattice_constants = eval(line.rstrip().split(':')[0])
 					lines.append((lattice_constants,line))
-			import pdb; pdb.set_trace()
 			energies_vs_lattice_constants_sorted = sorted(energies_vs_lattice_constants.items())
-			if isinstance(self.lattice_constant_types,list) or isinstance(self.lattice_constant_types,tuple):
+			#if isinstance(self.lattice_constant_types,list) or isinstance(self.lattice_constant_types,tuple):
+			if len(self.lattice_constant_types) > 1:
 				for lattice_constants, energy in energies_vs_lattice_constants_sorted:
-					lattice_data_FILE_NEW.write(str(lattice_constants)+': '+str(energy))
+					lattice_data_FILE_NEW.write(str(lattice_constants)+': '+str(energy)+'\n')
 			else:
 				for lattice_constants, (energy, volume) in energies_vs_lattice_constants_sorted:
-					lattice_data_FILE_NEW.write(str(lattice_constants)+': '+str(energy)+' ('+str(volume)+')')
+					lattice_data_FILE_NEW.write(str(lattice_constants)+': '+str(energy)+' ('+str(volume)+')'+'\n')
 		os.remove(self.lattice_data_file)
 		os.rename(self.lattice_data_file+new_suffix,self.lattice_data_file)
 
@@ -357,6 +357,11 @@ class LatticeFinder_Program:
 			results_fileTXT.write('Lattice Constant Parameters: '+str(self.lattice_constant_types)+'\n')
 			results_fileTXT.write('\n')
 			results_fileTXT.write('Properties of System: \n')	
+			results_fileTXT.write('\n')
+			if len(self.lattice_constant_types) == 1:
+				latticeconstants = list(zip(self.lattice_constant_types,latticeconstants))
+			results_fileTXT.write('Lattice constant(s) (in Angs): '+str(latticeconstants)+'\n')
+			results_fileTXT.write('NOTE: Check your lattice constant curve in Energy_Vs_Lattice_Constant.png to make sure you have found the lattice constant to the precision you are happy with.\n')
 			results_fileTXT.write('\n')
 			results_fileTXT.write('Total energy: '+str(energy)+' eV\n')
 			results_fileTXT.write('No. of atoms: '+str(no_of_atoms)+' Atoms (Note the number of atoms along each natural direction of the bulk is '+str(self.size)+')\n')
